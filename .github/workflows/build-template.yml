@@ -17,10 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+# the PROS 4.2 kernel compiles with --std=gnu++26, which needs GCC >= 14
       - name: Install ARM toolchain
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi build-essential
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+        with:
+          release: "14.2.Rel1"
 
       - name: Install PROS CLI
         run: pip install pros-cli
