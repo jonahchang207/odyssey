@@ -1,0 +1,17 @@
+# PROS build artifacts
+bin/
+*.o
+*.d
+compile_commands.json
+temp.log
+temp.errors
+.depend
+
+# MkDocs build output
+site/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

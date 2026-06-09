@@ -1,0 +1,70 @@
+site_name: Odyssey
+site_description: Odometry and motion control template for VEX V5 (PROS)
+# update these after creating your GitHub repository:
+site_url: https://YOUR_GITHUB_USERNAME.github.io/odyssey/
+repo_url: https://github.com/YOUR_GITHUB_USERNAME/odyssey
+repo_name: odyssey
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Hardware Setup: getting-started/hardware.md
+      - Configuration: getting-started/configuration.md
+      - The Coordinate System: getting-started/coordinates.md
+      - Your First Autonomous: getting-started/first-autonomous.md
+  - Tutorials:
+      - Tuning the PIDs: tutorials/tuning.md
+      - Driver Control: tutorials/driver-control.md
+      - Pure Pursuit Paths: tutorials/pure-pursuit.md
+  - How It Works:
+      - The Odometry Math: explanation/odometry-math.md
+  - API Reference:
+      - Chassis: api/chassis.md
+      - Odometry: api/odometry.md
+      - Helpers: api/helpers.md
