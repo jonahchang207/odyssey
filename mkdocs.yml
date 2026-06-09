@@ -1,8 +1,7 @@
-site_name: Odyssey
+﻿site_name: Odyssey
 site_description: Odometry and motion control template for VEX V5 (PROS)
-# update these after creating your GitHub repository:
-site_url: https://YOUR_GITHUB_USERNAME.github.io/odyssey/
-repo_url: https://github.com/YOUR_GITHUB_USERNAME/odyssey
+site_url: https://jonahchang207.github.io/odyssey/
+repo_url: https://github.com/jonahchang207/odyssey
 repo_name: odyssey
 
 theme:
@@ -62,6 +61,7 @@ nav:
       - Tuning the PIDs: tutorials/tuning.md
       - Driver Control: tutorials/driver-control.md
       - Pure Pursuit Paths: tutorials/pure-pursuit.md
+      - Team Workflow & CLI: tutorials/workflow.md
   - How It Works:
       - The Odometry Math: explanation/odometry-math.md
   - API Reference:

@@ -2,7 +2,7 @@
 
 All configuration happens at the top of `src/main.cpp` as global objects.
 This page walks through each piece. The full example lives in
-[`example/main.cpp`](https://github.com/YOUR_GITHUB_USERNAME/odyssey/blob/main/example/main.cpp).
+[`example/main.cpp`](https://github.com/jonahchang207/odyssey/blob/main/example/main.cpp).
 
 ## 1. Motors and sensors
 

@@ -7,7 +7,7 @@ full set of motion functions that use it — inspired by [LemLib](https://github
 and [EZ-Template](https://github.com/EZ-Robotics/EZ-Template), and by 5225A's
 *Introduction to Position Tracking*.
 
-📖 **[Read the full documentation](https://YOUR_GITHUB_USERNAME.github.io/odyssey/)**
+📖 **[Read the full documentation](https://jonahchang207.github.io/odyssey/)**
 
 ## Features
 
@@ -49,8 +49,26 @@ void autonomous() {
 4. Copy `example/main.cpp` over your `src/main.cpp` and edit the ports and
    dimensions to match your robot.
 
-See the [installation guide](https://YOUR_GITHUB_USERNAME.github.io/odyssey/getting-started/installation/)
+See the [installation guide](https://jonahchang207.github.io/odyssey/getting-started/installation/)
 for full instructions.
+
+## Team workflow & the Odyssey CLI
+
+The repo uses a two-branch model: **`main`** is stable and protected (changes
+arrive only through pull requests), **`dev`** is the everyday working branch.
+A menu-driven CLI wraps the whole workflow so nobody needs to memorize git:
+
+```powershell
+.\odyssey          # interactive menu
+.\odyssey commit   # or jump straight to: status, commit, push, sync,
+                   # branch, pr, merge, release, setup
+```
+
+It handles conventional-prefix commits (including a robotics-specific
+`tune:` type), dev → main pull requests, semver releases with
+auto-generated notes, and one-time GitHub repo setup including branch
+protection. See the
+[workflow guide](https://jonahchang207.github.io/odyssey/tutorials/workflow/).
 
 ## Documentation
 
