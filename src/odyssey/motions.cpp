@@ -151,11 +151,12 @@ void Chassis::swingToHeading(float theta, DriveSide lockedSide, int timeout,
     distTraveled = 0;
 
     // hold the locked side still while the other side swings
-    const pros::motor_brake_mode_e prevMode =
-        drivetrain.leftMotors->get_brake_mode();
+    const pros::v5::MotorBrake prevMode = lockedSide == DriveSide::LEFT
+                                              ? drivetrain.leftMotors->get_brake_mode()
+                                              : drivetrain.rightMotors->get_brake_mode();
     if (lockedSide == DriveSide::LEFT)
-        drivetrain.leftMotors->set_brake_mode_all(pros::E_MOTOR_BRAKE_HOLD);
-    else drivetrain.rightMotors->set_brake_mode_all(pros::E_MOTOR_BRAKE_HOLD);
+        drivetrain.leftMotors->set_brake_mode_all(pros::v5::MotorBrake::hold);
+    else drivetrain.rightMotors->set_brake_mode_all(pros::v5::MotorBrake::hold);
 
     while (pros::millis() - startTime < timeout && !angularSmallExit.getExit() &&
            !angularLargeExit.getExit() && motionRunning) {

@@ -43,14 +43,22 @@ void autonomous() {
 
 ## Installation
 
-1. Create a PROS project (`pros c create my-robot` or the PROS VS Code extension).
-2. Copy `include/odyssey/` into your project's `include/` folder.
-3. Copy `src/odyssey/` into your project's `src/` folder.
-4. Copy `example/main.cpp` over your `src/main.cpp` and edit the ports and
-   dimensions to match your robot.
+Odyssey installs as a PROS template, just like LemLib:
 
-See the [installation guide](https://jonahchang207.github.io/odyssey/getting-started/installation/)
-for full instructions.
+```sh
+# one-time: register the Odyssey depot
+pros c add-depot odyssey https://raw.githubusercontent.com/jonahchang207/odyssey/depot/stable.json
+
+# inside your PROS project:
+pros c apply odyssey
+```
+
+Then copy [`src/main.cpp`](src/main.cpp) from this repo into your project and
+edit the ports and dimensions to match your robot. Prefer hacking on the
+source directly? Copy `include/odyssey/` and `src/odyssey/` into your project
+instead. See the
+[installation guide](https://jonahchang207.github.io/odyssey/getting-started/installation/)
+for all options.
 
 ## Team workflow & the Odyssey CLI
 
