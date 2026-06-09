@@ -1,0 +1,82 @@
+name: Build PROS template
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ARM toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi build-essential
+
+      - name: Install PROS CLI
+        run: pip install pros-cli
+
+      # when building a release, the template version comes from the tag
+      - name: Set template version from tag
+        if: github.event_name == 'release'
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          sed -i "s/^VERSION:=.*/VERSION:=${VERSION}/" Makefile
+          echo "Template version: ${VERSION}"
+
+      - name: Build template
+        run: make template -j
+
+      - name: List build output
+        run: ls -la odyssey@*.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: odyssey-template
+          path: "odyssey@*.zip"
+
+      - name: Attach template to the release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "$GITHUB_REF_NAME" odyssey@*.zip --clobber
+
+      # publish the depot json so users can install with:
+      #   pros c add-depot odyssey <raw url of stable.json>
+      - name: Update depot branch
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          KERNEL=$(python3 -c "import json; print(json.load(open('project.pros'))['py/state']['templates']['kernel']['version'])")
+          mkdir depot-out && cd depot-out
+          cat > stable.json <<EOF
+          [
+            {
+              "metadata": {
+                "location": "https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/odyssey@${VERSION}.zip"
+              },
+              "name": "odyssey",
+              "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+              "supported_kernels": "^${KERNEL}",
+              "target": "v5",
+              "version": "${VERSION}"
+            }
+          ]
+          EOF
+          git init -b depot
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stable.json
+          git commit -m "depot: odyssey ${VERSION}"
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" depot

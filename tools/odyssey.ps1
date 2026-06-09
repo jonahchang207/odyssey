@@ -198,7 +198,11 @@ function Invoke-Release {
     git tag $version
     git push origin $version
     gh release create $version --title $version --generate-notes
-    if ($LASTEXITCODE -eq 0) { Write-Ok "Released $version" }
+    if ($LASTEXITCODE -eq 0) {
+        Write-Ok "Released $version"
+        Write-Host "The 'Build PROS template' action is now building odyssey@$($version.TrimStart('v')).zip,"
+        Write-Host "attaching it to the release, and updating the depot. Watch it with: gh run list"
+    }
     git checkout dev
 }
 

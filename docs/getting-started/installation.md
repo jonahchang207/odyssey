@@ -1,8 +1,9 @@
 # Installation
 
-Odyssey is a source template: you copy its files into a PROS project. This
-keeps everything readable and hackable — there is no precompiled library to
-fight with.
+Odyssey installs like LemLib does: as a **PROS template** — a versioned
+package containing the compiled library and its headers that the PROS
+conductor manages for you. You can also vendor the raw source if you want to
+hack on the library itself.
 
 ## Prerequisites
 
@@ -11,37 +12,62 @@ fight with.
 - A VEX V5 brain and at least a drivetrain with left/right motors
 - Strongly recommended: a V5 inertial sensor (IMU)
 
-## 1. Create a PROS project
+## Option A — depot install (recommended)
 
-Using the PROS VS Code extension: **PROS → Create Project → V5**.
-
-Or from a terminal:
+Register the Odyssey depot once, then install it into any PROS project:
 
 ```sh
-pros c create my-robot v5
+# one-time: tell the PROS conductor where Odyssey lives
+pros c add-depot odyssey https://raw.githubusercontent.com/jonahchang207/odyssey/depot/stable.json
+
+# inside your PROS project:
+pros c apply odyssey
 ```
 
-## 2. Copy Odyssey in
+Upgrading later is one command:
 
-From this repository, copy:
+```sh
+pros c upgrade odyssey
+```
+
+## Option B — manual template install
+
+1. Download `odyssey@X.Y.Z.zip` from the
+   [latest release](https://github.com/jonahchang207/odyssey/releases/latest).
+2. Register it with the conductor:
+
+    ```sh
+    pros c fetch odyssey@X.Y.Z.zip
+    ```
+
+3. Apply it inside your PROS project:
+
+    ```sh
+    pros c apply odyssey
+    ```
+
+## Option C — vendor the source
+
+If you want to modify the library itself, copy the source straight into your
+project instead of using the template:
 
 | From (this repo)    | To (your project)     |
 | ------------------- | --------------------- |
 | `include/odyssey/`  | `include/odyssey/`    |
 | `src/odyssey/`      | `src/odyssey/`        |
-| `example/main.cpp`  | `src/main.cpp`        |
 
-The PROS build system compiles everything under `src/` automatically — no
-Makefile changes are needed.
+The PROS build system compiles everything under `src/` automatically.
 
-## 3. Build
+## Set up `main.cpp`
+
+However you installed, copy the example robot configuration from
+[`src/main.cpp`](https://github.com/jonahchang207/odyssey/blob/main/src/main.cpp)
+in this repository into your project's `src/main.cpp`, and continue to
+[Configuration](configuration.md) to adapt it.
 
 ```sh
 pros make
 ```
-
-The example `main.cpp` will not match your robot yet — that's the next step:
-[Configuration](configuration.md).
 
 !!! tip "One include"
     Everything in the library is available through a single header:
@@ -50,9 +76,9 @@ The example `main.cpp` will not match your robot yet — that's the next step:
     #include "odyssey/api.hpp"
     ```
 
-## Updating
+## How the template is built
 
-Because Odyssey is plain source, updating is just re-copying
-`include/odyssey/` and `src/odyssey/` from a newer version of this
-repository. Your configuration lives in `main.cpp`, so it is never
-overwritten.
+Every GitHub release automatically builds `odyssey@X.Y.Z.zip` (headers +
+compiled `firmware/odyssey.a`) with the `Build PROS template` workflow and
+updates the depot, so the depot always points at the newest stable release.
+You never need a local ARM toolchain unless you're developing Odyssey itself.

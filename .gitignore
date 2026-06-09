@@ -1,11 +1,21 @@
 # PROS build artifacts
 bin/
 *.o
+*.obj
 *.d
+*.bin
+*.elf
 compile_commands.json
 temp.log
 temp.errors
 .depend
+.cache/
+.d/
+*.ini
+
+# built template output
+template/
+odyssey@*.zip
 
 # MkDocs build output
 site/
