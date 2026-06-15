@@ -1,371 +1,996 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odyssey — AP CS A Final Project</title>
-<style>
-  /* ============================================================== *
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odyssey — AP CS A Final Project</title>
+  <style>
+    /* ============================================================== *
    *  ODYSSEY — final project slideshow                              *
    *  Self-contained: no internet required. Open index.html.         *
    *  Palette pulled from the project's steampunk brand.             *
    * ============================================================== */
-  :root{
-    --bg:#15100a;
-    --bg2:#1d160d;
-    --panel:#241b10;
-    --panel2:#2c2114;
-    --line:#3a2c18;
-    --brass:#e0b54e;
-    --gold:#c9972c;
-    --copper:#b87333;
-    --copper-d:#7e4a1d;
-    --cream:#f1e3c5;
-    --ink:#e9dcc2;
-    --muted:#b29a72;
-    --dim:#8a7350;
-    --good:#7fc08a;
-    --warn:#e08a6a;
-    --mono:"SF Mono","JetBrains Mono","Cascadia Code",Consolas,"Liberation Mono",monospace;
-    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    font-family:var(--sans);
-    color:var(--ink);
-    background:
-      radial-gradient(120% 90% at 50% -10%, #2a1f12 0%, var(--bg) 60%, #0e0a06 100%);
-    overflow:hidden;
-  }
+    :root {
+      --bg: #15100a;
+      --bg2: #1d160d;
+      --panel: #241b10;
+      --panel2: #2c2114;
+      --line: #3a2c18;
+      --brass: #e0b54e;
+      --gold: #c9972c;
+      --copper: #b87333;
+      --copper-d: #7e4a1d;
+      --cream: #f1e3c5;
+      --ink: #e9dcc2;
+      --muted: #b29a72;
+      --dim: #8a7350;
+      --good: #7fc08a;
+      --warn: #e08a6a;
+      --mono: "SF Mono", "JetBrains Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+      --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    }
 
-  /* ---------- deck / slides ---------- */
-  .deck{position:fixed;inset:0}
-  .slide{
-    position:absolute;inset:0;
-    display:flex;flex-direction:column;justify-content:center;
-    padding:clamp(28px,5vw,92px);
-    opacity:0;visibility:hidden;
-    transform:translateY(18px) scale(.99);
-    transition:opacity .45s ease, transform .45s ease, visibility .45s;
-    overflow:auto;
-  }
-  .slide.active{opacity:1;visibility:visible;transform:none;z-index:2}
-  .slide.prev{transform:translateY(-18px) scale(.99)}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-  /* ---------- typography ---------- */
-  .kicker{
-    font-size:clamp(11px,1.1vw,14px);letter-spacing:.32em;text-transform:uppercase;
-    color:var(--gold);font-weight:700;margin-bottom:18px;
-    display:flex;align-items:center;gap:12px;
-  }
-  .kicker::before{content:"";width:34px;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
-  h1{font-size:clamp(40px,8vw,104px);line-height:.98;font-weight:800;letter-spacing:-.02em;
-     background:linear-gradient(180deg,#fbe9bd,var(--brass) 55%,var(--copper));
-     -webkit-background-clip:text;background-clip:text;color:transparent}
-  h2{font-size:clamp(28px,4.4vw,52px);line-height:1.05;font-weight:800;letter-spacing:-.015em;color:var(--cream)}
-  h2 .accent{color:var(--gold)}
-  h3{font-size:clamp(17px,1.7vw,22px);color:var(--brass);font-weight:700;margin-bottom:6px}
-  p,li{font-size:clamp(15px,1.55vw,20px);line-height:1.55;color:var(--ink)}
-  .lead{font-size:clamp(17px,2vw,26px);color:var(--muted);max-width:60ch;line-height:1.5}
-  .sub{color:var(--muted)}
-  strong{color:var(--cream)}
-  .em{color:var(--brass);font-style:normal;font-weight:600}
+    html,
+    body {
+      height: 100%
+    }
 
-  /* ---------- layout helpers ---------- */
-  .wrap{max-width:1180px;margin:0 auto;width:100%}
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:center}
-  .two.tight{grid-template-columns:1.05fr .95fr}
-  ul.clean{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:10px}
-  ul.clean li{position:relative;padding-left:30px}
-  ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:11px;height:11px;border-radius:3px;
-    background:linear-gradient(135deg,var(--brass),var(--copper));box-shadow:0 0 0 4px rgba(201,151,44,.12)}
-  ul.clean li small{display:block;color:var(--muted);font-size:.82em;margin-top:2px;line-height:1.45}
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(120% 90% at 50% -10%, #2a1f12 0%, var(--bg) 60%, #0e0a06 100%);
+      overflow: hidden;
+    }
 
-  /* ---------- cards ---------- */
-  .cards{display:grid;gap:18px}
-  .cards.c3{grid-template-columns:repeat(3,1fr)}
-  .cards.c2{grid-template-columns:repeat(2,1fr)}
-  .card{
-    background:linear-gradient(160deg,var(--panel),var(--bg2));
-    border:1px solid var(--line);border-radius:16px;padding:20px 22px;
-    position:relative;overflow:hidden;
-  }
-  .card::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;
-    background:linear-gradient(180deg,var(--brass),var(--copper))}
-  .card .ic{font-size:24px;margin-bottom:8px;display:block}
-  .card h3{margin-bottom:6px}
-  .card p{font-size:clamp(13px,1.25vw,15.5px);color:var(--muted);line-height:1.5}
+    /* ---------- deck / slides ---------- */
+    .deck {
+      position: fixed;
+      inset: 0
+    }
 
-  /* ---------- code ---------- */
-  pre{background:#120d07;border:1px solid var(--line);border-radius:14px;
-      padding:18px 20px;overflow:auto;box-shadow:inset 0 0 40px rgba(0,0,0,.4)}
-  code{font-family:var(--mono);font-size:clamp(12px,1.18vw,15px);line-height:1.65}
-  .tok-com{color:#7c6a4a;font-style:italic}
-  .tok-key{color:#e08a6a}
-  .tok-type{color:var(--brass)}
-  .tok-str{color:#a9c98f}
-  .tok-num{color:#d9a3d0}
-  .tok-fn{color:#9ec7e8}
-  .codecap{font-family:var(--mono);font-size:12px;color:var(--dim);margin-top:8px}
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(28px, 5vw, 92px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(18px) scale(.99);
+      transition: opacity .45s ease, transform .45s ease, visibility .45s;
+      overflow: auto;
+    }
 
-  .pill{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--brass);
-    border:1px solid var(--line);background:rgba(201,151,44,.06);padding:6px 13px;border-radius:999px;font-weight:600}
-  .pillrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      z-index: 2
+    }
 
-  .note{border-left:3px solid var(--copper);background:rgba(184,115,51,.08);
-    padding:12px 16px;border-radius:0 10px 10px 0;color:var(--muted);font-size:.95em}
+    .slide.prev {
+      transform: translateY(-18px) scale(.99)
+    }
 
-  /* ---------- chrome: progress, counter, nav ---------- */
-  .progress{position:fixed;top:0;left:0;height:3px;z-index:50;
-    background:linear-gradient(90deg,var(--brass),var(--copper));width:0;transition:width .4s ease}
-  .counter{position:fixed;bottom:18px;right:22px;z-index:50;font-family:var(--mono);
-    font-size:13px;color:var(--dim);letter-spacing:.1em}
-  .counter b{color:var(--brass)}
-  .dots{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:50;
-    display:flex;gap:9px;background:rgba(20,15,9,.6);backdrop-filter:blur(6px);
-    padding:9px 13px;border-radius:999px;border:1px solid var(--line)}
-  .dot{width:9px;height:9px;border-radius:50%;background:#4a3a22;cursor:pointer;border:0;transition:.25s;padding:0}
-  .dot:hover{background:var(--copper)}
-  .dot.on{background:linear-gradient(135deg,var(--brass),var(--copper));transform:scale(1.25)}
-  .nav{position:fixed;bottom:14px;z-index:50;width:42px;height:42px;border-radius:50%;
-    border:1px solid var(--line);background:rgba(36,27,16,.75);color:var(--brass);
-    font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
-  .nav:hover{background:var(--copper);color:#1a120a;border-color:var(--copper)}
-  .nav.left{left:22px}.nav.right{left:72px}
-  .hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(60px);z-index:40;
-    color:var(--dim);font-size:13px;opacity:0;transition:.5s;pointer-events:none}
-  .brandmark{position:fixed;top:16px;left:20px;z-index:50;display:flex;align-items:center;gap:9px;
-    color:var(--dim);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
-  .brandmark img{width:24px;height:24px;opacity:.9}
+    /* ---------- typography ---------- */
+    .kicker {
+      font-size: clamp(11px, 1.1vw, 14px);
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-  /* notes overlay */
-  .notes{position:fixed;left:0;right:0;bottom:0;z-index:60;transform:translateY(101%);
-    transition:transform .35s ease;background:rgba(13,9,5,.97);border-top:2px solid var(--gold);
-    padding:18px 26px 26px;max-height:42vh;overflow:auto}
-  .notes.show{transform:none}
-  .notes h4{color:var(--gold);font-size:13px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
-  .notes ul{margin-left:18px;display:flex;flex-direction:column;gap:6px}
-  .notes li{font-size:15px;color:var(--ink)}
-  .notes .x{float:right;color:var(--dim);cursor:pointer;font-size:13px}
+    .kicker::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent)
+    }
 
-  /* ---------- title slide flourish ---------- */
-  .title-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
-  .title-logo{width:clamp(96px,13vw,150px);height:auto;margin-bottom:6px;
-    filter:drop-shadow(0 8px 26px rgba(201,151,44,.28))}
-  .title-meta{margin-top:26px;display:flex;gap:30px;flex-wrap:wrap;justify-content:center;color:var(--muted);font-size:15px}
-  .title-meta b{color:var(--cream)}
-  .ring{position:absolute;border-radius:50%;border:1px solid rgba(201,151,44,.10)}
+    h1 {
+      font-size: clamp(40px, 8vw, 104px);
+      line-height: .98;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      background: linear-gradient(180deg, #fbe9bd, var(--brass) 55%, var(--copper));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent
+    }
 
-  /* ---------- the simulator ---------- */
-  .sim{display:grid;grid-template-columns:auto 320px;gap:22px;align-items:start;justify-content:center}
-  .sim-stage{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;
-    background:#0e0a06;box-shadow:0 12px 50px rgba(0,0,0,.5)}
-  #field{display:block;touch-action:none}
-  .sim-panel{display:flex;flex-direction:column;gap:14px}
-  .read{background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--line);
-    border-radius:14px;padding:14px 16px}
-  .read h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
-  .readrow{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);
-    font-size:14px;padding:3px 0}
-  .readrow .lbl{color:var(--muted)}
-  .readrow .val{color:var(--cream);font-weight:600}
-  .readrow.truth .val{color:var(--brass)}
-  .readrow.odom .val{color:#9ec7e8}
-  .readrow.err .val{color:var(--good)}
-  .readrow.err.bad .val{color:var(--warn)}
-  .btns{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-  .btn{font-family:var(--sans);font-size:13.5px;font-weight:600;cursor:pointer;border-radius:10px;
-    padding:10px 8px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);transition:.18s}
-  .btn:hover{border-color:var(--copper);color:var(--brass)}
-  .btn.on{background:linear-gradient(135deg,var(--gold),var(--copper));color:#1a120a;border-color:var(--copper)}
-  .btn.wide{grid-column:1/-1}
-  .dpad{display:grid;grid-template-columns:repeat(3,46px);grid-template-rows:repeat(2,46px);
-    gap:8px;justify-content:center;margin-top:2px}
-  .dpad button{font-size:20px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);
-    color:var(--brass);cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:center}
-  .dpad button:active{background:var(--copper);color:#1a120a}
-  .dpad .sp{visibility:hidden}
-  .legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:4px;flex-wrap:wrap}
-  .legend span{display:flex;align-items:center;gap:6px}
-  .sw{width:14px;height:4px;border-radius:2px;display:inline-block}
-  .help{font-size:12.5px;color:var(--dim);line-height:1.5}
+    h2 {
+      font-size: clamp(28px, 4.4vw, 52px);
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -.015em;
+      color: var(--cream)
+    }
 
-  @media(max-width:880px){
-    .two,.two.tight{grid-template-columns:1fr;gap:24px}
-    .cards.c3{grid-template-columns:1fr 1fr}
-    .sim{grid-template-columns:1fr}
-    .sim-panel{flex-direction:row;flex-wrap:wrap}
-  }
-  @media(max-width:560px){.cards.c3,.cards.c2{grid-template-columns:1fr}}
+    h2 .accent {
+      color: var(--gold)
+    }
 
-  .fade-list>*{opacity:0;transform:translateY(10px);animation:rise .5s forwards}
-  .slide.active .fade-list>*{animation:rise .55s forwards}
-  @keyframes rise{to{opacity:1;transform:none}}
-  .fade-list>*:nth-child(1){animation-delay:.08s}
-  .fade-list>*:nth-child(2){animation-delay:.16s}
-  .fade-list>*:nth-child(3){animation-delay:.24s}
-  .fade-list>*:nth-child(4){animation-delay:.32s}
-  .fade-list>*:nth-child(5){animation-delay:.40s}
-  .fade-list>*:nth-child(6){animation-delay:.48s}
-</style>
+    h3 {
+      font-size: clamp(17px, 1.7vw, 22px);
+      color: var(--brass);
+      font-weight: 700;
+      margin-bottom: 6px
+    }
+
+    p,
+    li {
+      font-size: clamp(15px, 1.55vw, 20px);
+      line-height: 1.55;
+      color: var(--ink)
+    }
+
+    .lead {
+      font-size: clamp(17px, 2vw, 26px);
+      color: var(--muted);
+      max-width: 60ch;
+      line-height: 1.5
+    }
+
+    .sub {
+      color: var(--muted)
+    }
+
+    strong {
+      color: var(--cream)
+    }
+
+    .em {
+      color: var(--brass);
+      font-style: normal;
+      font-weight: 600
+    }
+
+    /* ---------- layout helpers ---------- */
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      width: 100%
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(24px, 4vw, 64px);
+      align-items: center
+    }
+
+    .two.tight {
+      grid-template-columns: 1.05fr .95fr
+    }
+
+    ul.clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 10px
+    }
+
+    ul.clean li {
+      position: relative;
+      padding-left: 30px
+    }
+
+    ul.clean li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .62em;
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      background: linear-gradient(135deg, var(--brass), var(--copper));
+      box-shadow: 0 0 0 4px rgba(201, 151, 44, .12)
+    }
+
+    ul.clean li small {
+      display: block;
+      color: var(--muted);
+      font-size: .82em;
+      margin-top: 2px;
+      line-height: 1.45
+    }
+
+    /* ---------- cards ---------- */
+    .cards {
+      display: grid;
+      gap: 18px
+    }
+
+    .cards.c3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .cards.c2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .card {
+      background: linear-gradient(160deg, var(--panel), var(--bg2));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--brass), var(--copper))
+    }
+
+    .card .ic {
+      font-size: 24px;
+      margin-bottom: 8px;
+      display: block
+    }
+
+    .card h3 {
+      margin-bottom: 6px
+    }
+
+    .card p {
+      font-size: clamp(13px, 1.25vw, 15.5px);
+      color: var(--muted);
+      line-height: 1.5
+    }
+
+    /* ---------- code ---------- */
+    pre {
+      background: #120d07;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+      overflow: auto;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, .4)
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: clamp(12px, 1.18vw, 15px);
+      line-height: 1.65
+    }
+
+    .tok-com {
+      color: #7c6a4a;
+      font-style: italic
+    }
+
+    .tok-key {
+      color: #e08a6a
+    }
+
+    .tok-type {
+      color: var(--brass)
+    }
+
+    .tok-str {
+      color: #a9c98f
+    }
+
+    .tok-num {
+      color: #d9a3d0
+    }
+
+    .tok-fn {
+      color: #9ec7e8
+    }
+
+    .codecap {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--dim);
+      margin-top: 8px
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--brass);
+      border: 1px solid var(--line);
+      background: rgba(201, 151, 44, .06);
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-weight: 600
+    }
+
+    .pillrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px
+    }
+
+    .note {
+      border-left: 3px solid var(--copper);
+      background: rgba(184, 115, 51, .08);
+      padding: 12px 16px;
+      border-radius: 0 10px 10px 0;
+      color: var(--muted);
+      font-size: .95em
+    }
+
+    /* ---------- chrome: progress, counter, nav ---------- */
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      z-index: 50;
+      background: linear-gradient(90deg, var(--brass), var(--copper));
+      width: 0;
+      transition: width .4s ease
+    }
+
+    .counter {
+      position: fixed;
+      bottom: 18px;
+      right: 22px;
+      z-index: 50;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--dim);
+      letter-spacing: .1em
+    }
+
+    .counter b {
+      color: var(--brass)
+    }
+
+    .dots {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      gap: 9px;
+      background: rgba(20, 15, 9, .6);
+      backdrop-filter: blur(6px);
+      padding: 9px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line)
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #4a3a22;
+      cursor: pointer;
+      border: 0;
+      transition: .25s;
+      padding: 0
+    }
+
+    .dot:hover {
+      background: var(--copper)
+    }
+
+    .dot.on {
+      background: linear-gradient(135deg, var(--brass), var(--copper));
+      transform: scale(1.25)
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 14px;
+      z-index: 50;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(36, 27, 16, .75);
+      color: var(--brass);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .2s
+    }
+
+    .nav:hover {
+      background: var(--copper);
+      color: #1a120a;
+      border-color: var(--copper)
+    }
+
+    .nav.left {
+      left: 22px
+    }
+
+    .nav.right {
+      left: 72px
+    }
+
+    .hint {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      z-index: 40;
+      color: var(--dim);
+      font-size: 13px;
+      opacity: 0;
+      transition: .5s;
+      pointer-events: none
+    }
+
+    .brandmark {
+      position: fixed;
+      top: 16px;
+      left: 20px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--dim);
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-weight: 700
+    }
+
+    .brandmark img {
+      width: 24px;
+      height: 24px;
+      opacity: .9
+    }
+
+    /* notes overlay */
+    .notes {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      transform: translateY(101%);
+      transition: transform .35s ease;
+      background: rgba(13, 9, 5, .97);
+      border-top: 2px solid var(--gold);
+      padding: 18px 26px 26px;
+      max-height: 42vh;
+      overflow: auto
+    }
+
+    .notes.show {
+      transform: none
+    }
+
+    .notes h4 {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 8px
+    }
+
+    .notes ul {
+      margin-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .notes li {
+      font-size: 15px;
+      color: var(--ink)
+    }
+
+    .notes .x {
+      float: right;
+      color: var(--dim);
+      cursor: pointer;
+      font-size: 13px
+    }
+
+    /* ---------- title slide flourish ---------- */
+    .title-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px
+    }
+
+    .title-logo {
+      width: clamp(96px, 13vw, 150px);
+      height: auto;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 8px 26px rgba(201, 151, 44, .28))
+    }
+
+    .title-meta {
+      margin-top: 26px;
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .title-meta b {
+      color: var(--cream)
+    }
+
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 151, 44, .10)
+    }
+
+    /* ---------- the simulator ---------- */
+    .sim {
+      display: grid;
+      grid-template-columns: auto 320px;
+      gap: 22px;
+      align-items: start;
+      justify-content: center
+    }
+
+    .sim-stage {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0e0a06;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, .5)
+    }
+
+    #field {
+      display: block;
+      touch-action: none
+    }
+
+    .sim-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px
+    }
+
+    .read {
+      background: linear-gradient(160deg, var(--panel), var(--bg2));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px
+    }
+
+    .read h4 {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 10px
+    }
+
+    .readrow {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--mono);
+      font-size: 14px;
+      padding: 3px 0
+    }
+
+    .readrow .lbl {
+      color: var(--muted)
+    }
+
+    .readrow .val {
+      color: var(--cream);
+      font-weight: 600
+    }
+
+    .readrow.truth .val {
+      color: var(--brass)
+    }
+
+    .readrow.odom .val {
+      color: #9ec7e8
+    }
+
+    .readrow.err .val {
+      color: var(--good)
+    }
+
+    .readrow.err.bad .val {
+      color: var(--warn)
+    }
+
+    .btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px
+    }
+
+    .btn {
+      font-family: var(--sans);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 10px 8px;
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      color: var(--ink);
+      transition: .18s
+    }
+
+    .btn:hover {
+      border-color: var(--copper);
+      color: var(--brass)
+    }
+
+    .btn.on {
+      background: linear-gradient(135deg, var(--gold), var(--copper));
+      color: #1a120a;
+      border-color: var(--copper)
+    }
+
+    .btn.wide {
+      grid-column: 1/-1
+    }
+
+    .dpad {
+      display: grid;
+      grid-template-columns: repeat(3, 46px);
+      grid-template-rows: repeat(2, 46px);
+      gap: 8px;
+      justify-content: center;
+      margin-top: 2px
+    }
+
+    .dpad button {
+      font-size: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      color: var(--brass);
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .dpad button:active {
+      background: var(--copper);
+      color: #1a120a
+    }
+
+    .dpad .sp {
+      visibility: hidden
+    }
+
+    .legend {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      flex-wrap: wrap
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .sw {
+      width: 14px;
+      height: 4px;
+      border-radius: 2px;
+      display: inline-block
+    }
+
+    .help {
+      font-size: 12.5px;
+      color: var(--dim);
+      line-height: 1.5
+    }
+
+    @media(max-width:880px) {
+
+      .two,
+      .two.tight {
+        grid-template-columns: 1fr;
+        gap: 24px
+      }
+
+      .cards.c3 {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .sim {
+        grid-template-columns: 1fr
+      }
+
+      .sim-panel {
+        flex-direction: row;
+        flex-wrap: wrap
+      }
+    }
+
+    @media(max-width:560px) {
+
+      .cards.c3,
+      .cards.c2 {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .fade-list>* {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: rise .5s forwards
+    }
+
+    .slide.active .fade-list>* {
+      animation: rise .55s forwards
+    }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .fade-list>*:nth-child(1) {
+      animation-delay: .08s
+    }
+
+    .fade-list>*:nth-child(2) {
+      animation-delay: .16s
+    }
+
+    .fade-list>*:nth-child(3) {
+      animation-delay: .24s
+    }
+
+    .fade-list>*:nth-child(4) {
+      animation-delay: .32s
+    }
+
+    .fade-list>*:nth-child(5) {
+      animation-delay: .40s
+    }
+
+    .fade-list>*:nth-child(6) {
+      animation-delay: .48s
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="progress" id="progress"></div>
-<div class="brandmark"><img src="../docs/assets/logo.svg" alt="">Odyssey</div>
+  <div class="progress" id="progress"></div>
+  <div class="brandmark"><img src="../docs/assets/logo.svg" alt="">Odyssey</div>
 
-<div class="deck" id="deck">
+  <div class="deck" id="deck">
 
-  <!-- ============ 1 · TITLE ============ -->
-  <section class="slide" data-notes="Hi everyone — I'm Jonah. My project is Odyssey, a C++ library I built that lets a VEX robot know exactly where it is on the field and drive itself there. I'll keep this to slides as a reference and talk to you, and at the end you'll get to drive the simulator yourselves.">
-    <div class="title-wrap wrap">
-      <img class="title-logo" src="../docs/assets/logo.svg" alt="Odyssey logo">
-      <div class="kicker" style="justify-content:center">AP CS A · Final Project</div>
-      <h1>Odyssey</h1>
-      <p class="lead" style="margin-top:14px">An odometry and motion control library for VEX V5 robots. It tracks the robot's position on the field and drives it to target coordinates during the autonomous period.</p>
-      <div class="title-meta">
-        <div><b>Jonah Chang</b><br><span class="sub">Creator and maintainer</span></div>
-        <div><b>C++ · PROS · VEX V5</b><br><span class="sub">A reusable robotics library</span></div>
-        <div><b>Live demonstration included</b><br><span class="sub">Interactive simulator</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 2 · WHO / WHAT ============ -->
-  <section class="slide" data-notes="Quick intro to me and a one-sentence version of the project before we go deep. The key idea: most robot autonomous code is blind. Mine isn't.">
-    <div class="wrap two tight">
-      <div class="fade-list">
-        <div class="kicker">Introduction</div>
-        <h2>Project <span class="accent">overview</span></h2>
-        <p class="lead" style="margin-top:16px">Odyssey is a custom C++ library for VEX V5 competition robots. It continuously tracks the robot's position — <strong>(x, y, heading)</strong> — and provides motion commands such as "drive to (24, 36) facing 90°".</p>
-        <div class="pillrow" style="margin-top:18px">
-          <span class="pill">About 600 lines of C++</span>
-          <span class="pill">Trigonometry and control theory</span>
-          <span class="pill">Distributed as a library</span>
+    <!-- ============ 1 · TITLE ============ -->
+    <section class="slide"
+      data-notes="Hi everyone — I'm Jonah. My project is Odyssey, a C++ library I built that lets a VEX robot know exactly where it is on the field and drive itself there. I'll keep this to slides as a reference and talk to you, and at the end you'll get to drive the simulator yourselves.">
+      <div class="title-wrap wrap">
+        <img class="title-logo" src="../docs/assets/logo.svg" alt="Odyssey logo">
+        <div class="kicker" style="justify-content:center">AP CS A · Final Project</div>
+        <h1>Odyssey</h1>
+        <p class="lead" style="margin-top:14px">Position tracking and self-driving for VEX V5 robots.</p>
+        <div class="title-meta">
+          <div><b>Jonah Chang</b><br><span class="sub">Creator and maintainer</span></div>
+          <div><b>C++ · PROS · VEX V5</b><br><span class="sub">A reusable robotics library</span></div>
+          <div><b>Live demonstration included</b><br><span class="sub">Interactive simulator</span></div>
         </div>
       </div>
-      <div class="fade-list">
-        <div class="card"><h3>The robot</h3><p>A VEX V5 competition robot running PROS, a C++ environment for the V5 brain.</p></div>
-        <div class="card" style="margin-top:16px"><h3>The task</h3><p>During the autonomous period the robot moves without a driver. It must know its position to score consistently.</p></div>
-        <div class="card" style="margin-top:16px"><h3>The result</h3><p>An installable template that any team robot can use, with a documentation site.</p></div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ 3 · WHY / MOTIVATION ============ -->
-  <section class="slide" data-notes="This is the 'why I chose it'. Tell the story: timed autonomous breaks the moment anything goes wrong — a bump, a low battery, a slightly different starting angle. I wanted to solve that for real, and I wanted to understand it, not just install someone else's black box.">
-    <div class="wrap">
-      <div class="kicker">Motivation</div>
-      <h2 style="max-width:18ch">Why this <span class="accent">project</span></h2>
-      <div class="two" style="margin-top:34px">
+    <!-- ============ 2 · WHO / WHAT ============ -->
+    <section class="slide"
+      data-notes="Quick intro to me and a one-sentence version of the project before we go deep. The key idea: most robot autonomous code is blind. Mine isn't.">
+      <div class="wrap two tight">
         <div class="fade-list">
-          <div class="card"><h3>The problem</h3><p>Most autonomous routines run the motors for a fixed time or distance. A bump, a low battery, or a crooked start throws off the entire routine, because there is no position feedback.</p></div>
-          <div class="card" style="margin-top:16px"><h3>The objective</h3><p>A robot that determines its actual position and corrects toward target coordinates on every run.</p></div>
+          <div class="kicker">Introduction</div>
+          <h2>Project <span class="accent">overview</span></h2>
+          <p class="lead" style="margin-top:16px">A C++ library that tracks a robot's <strong>(x, y, heading)</strong>
+            and drives it to coordinates.</p>
+        </div>
+        <div class="fade-list">
+          <div class="card">
+            <h3>The robot</h3>
+            <p>VEX V5, running PROS (C++).</p>
+          </div>
+          <div class="card" style="margin-top:16px">
+            <h3>The task</h3>
+            <p>Moves with no driver in autonomous — must know its position.</p>
+          </div>
+          <div class="card" style="margin-top:16px">
+            <h3>The result</h3>
+            <p>An installable template for any team robot.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · WHY / MOTIVATION ============ -->
+    <section class="slide"
+      data-notes="This is the 'why I chose it'. Tell the story: timed autonomous breaks the moment anything goes wrong — a bump, a low battery, a slightly different starting angle. I wanted to solve that for real, and I wanted to understand it, not just install someone else's black box.">
+      <div class="wrap">
+        <div class="kicker">Motivation</div>
+        <h2 style="max-width:18ch">Why this <span class="accent">project</span></h2>
+        <div class="two" style="margin-top:34px">
+          <div class="fade-list">
+            <div class="card">
+              <h3>The problem</h3>
+              <p>Routines run the motors for a fixed time. A bump or low battery ruins them — no position feedback.</p>
+            </div>
+            <div class="card" style="margin-top:16px">
+              <h3>The objective</h3>
+              <p>A robot that knows its position and corrects toward the target.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4 · GOALS ============ -->
+    <section class="slide"
+      data-notes="My concrete goals — what 'done' looked like before I started. I'll come back to these at the end to show I hit them.">
+      <div class="wrap">
+        <div class="kicker">Project goals</div>
+        <h2>Goals defined at the start</h2>
+        <div class="cards c3 fade-list" style="margin-top:30px">
+          <div class="card">
+            <h3>Track position</h3>
+            <p>Live (x, y, heading), about one inch accurate.</p>
+          </div>
+          <div class="card">
+            <h3>Drive to coordinates</h3>
+            <p>Move to a point, turn, arrive at a pose.</p>
+          </div>
+          <div class="card">
+            <h3>Resilience</h3>
+            <p>Keep working if a sensor fails.</p>
+          </div>
+          <div class="card">
+            <h3>Reusability</h3>
+            <p>Install in two commands.</p>
+          </div>
+          <div class="card">
+            <h3>Documentation</h3>
+            <p>Usable by teammates alone.</p>
+          </div>
+          <div class="card">
+            <h3>Customization</h3>
+            <p>Tunable PID, sensors, paths.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5 · LEARNING ============ -->
+    <section class="slide"
+      data-notes="How I taught myself — none of this is in any class I've taken. Emphasize reading the 5225A Pilons paper and other teams' open-source code, then re-deriving the math myself. This maps to the rubric's 'learning new skills' item.">
+      <div class="wrap two tight">
+        <div class="fade-list">
+          <div class="kicker">Learning on my own</div>
+          <h2>Self-directed <span class="accent">learning</span></h2>
+          <p class="lead" style="margin-top:16px">Learned independently — from the theory, open-source projects, and
+            working through the math.</p>
         </div>
         <div class="fade-list">
           <ul class="clean">
-            <li><strong>Reliability in matches.</strong><small>The routine should perform consistently whether the start is exact or disturbed.</small></li>
-            <li><strong>Understanding the system.</strong><small>Libraries such as LemLib and EZ-Template exist, but building it independently allows customization and an understanding of the underlying math.</small></li>
-            <li><strong>Reuse across the team.</strong><small>A single template that installs on any robot.</small></li>
+            <li><strong>5225A Pilons paper.</strong><small>The arc-based tracking whitepaper.</small></li>
+            <li><strong>Open-source code.</strong><small>LemLib and EZ-Template.</small></li>
+            <li><strong>PROS docs.</strong><small>The V5 C++ API.</small></li>
+            <li><strong>Math from scratch.</strong><small>Arcs, chords, coordinate frames.</small></li>
+            <li><strong>AI assistance.</strong><small>Concepts and debugging (see references).</small></li>
           </ul>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ 4 · GOALS ============ -->
-  <section class="slide" data-notes="My concrete goals — what 'done' looked like before I started. I'll come back to these at the end to show I hit them.">
-    <div class="wrap">
-      <div class="kicker">Project goals</div>
-      <h2>Goals defined at the start</h2>
-      <div class="cards c3 fade-list" style="margin-top:30px">
-        <div class="card"><h3>Track position</h3><p>Continuously compute (x, y, heading) accurate to about one inch over a full routine.</p></div>
-        <div class="card"><h3>Drive to coordinates</h3><p>Move to a point, turn to a heading, and arrive at a pose accurately and smoothly.</p></div>
-        <div class="card"><h3>Resilience</h3><p>Continue operating if a sensor fails during a match rather than ending the routine.</p></div>
-        <div class="card"><h3>Reusability</h3><p>Install on any team robot in two commands as a PROS template.</p></div>
-        <div class="card"><h3>Documentation</h3><p>Provide documentation so a teammate can use the library independently.</p></div>
-        <div class="card"><h3>Customization</h3><p>Tunable PID, configurable sensor setups, and loadable paths.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 5 · LEARNING ============ -->
-  <section class="slide" data-notes="How I taught myself — none of this is in any class I've taken. Emphasize reading the 5225A Pilons paper and other teams' open-source code, then re-deriving the math myself. This maps to the rubric's 'learning new skills' item.">
-    <div class="wrap two tight">
-      <div class="fade-list">
-        <div class="kicker">Learning on my own</div>
-        <h2>Self-directed <span class="accent">learning</span></h2>
-        <p class="lead" style="margin-top:16px">This material is not covered in available coursework. The approach was to study the theory, review open-source implementations, and re-derive the mathematics by hand until it could be rebuilt independently.</p>
-        <div class="note" style="margin-top:20px">Standard followed: a formula was not used unless it could be explained and derived.</div>
-      </div>
-      <div class="fade-list">
-        <ul class="clean">
-          <li><strong>5225A Pilons — "Introduction to Position Tracking."</strong><small>The foundational whitepaper on arc-based odometry. My algorithm is built on it.</small></li>
-          <li><strong>Reading real source code.</strong><small>Studied how LemLib and EZ-Template structure their motions — then adapted, didn't copy.</small></li>
-          <li><strong>PROS documentation.</strong><small>Learned the V5 C++ API: motor groups, the IMU, rotation sensors, multitasking.</small></li>
-          <li><strong>Math from the ground up.</strong><small>Arc length, chords, the small-angle limit, rotating between coordinate frames.</small></li>
-          <li><strong>AI assistance.</strong><small>Used Claude and ChatGPT to explain concepts and assist with debugging; details on the references slide.</small></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 6 · HOW IT WORKS ============ -->
-  <section class="slide" data-notes="The intuition, not the code. Two unpowered wheels on encoders plus a gyro. Every 10 ms read how far each rolled, model that tiny move as a slice of a circle (an arc), rotate it into field coordinates, and add it up. Like drawing your path one breadcrumb at a time. The sim later shows this happening live.">
-    <div class="wrap two">
-      <div class="fade-list">
-        <div class="kicker">How it works</div>
-        <h2>Accumulating small <span class="accent">arcs</span></h2>
-        <p style="margin-top:14px">Two free-spinning <strong>tracking wheels</strong> (one forward, one sideways) and an <strong>inertial sensor</strong> measure the robot's motion. Every <strong>10 milliseconds</strong>:</p>
-        <ul class="clean" style="margin-top:14px">
-          <li>Read how far each wheel rolled and how much the robot turned</li>
-          <li>Model that small motion as a slice of a circle, an arc</li>
-          <li>Rotate it into field coordinates and add it to the running total</li>
-        </ul>
-        <p class="sub" style="margin-top:16px">This runs 100 times per second and produces a position estimate from geometry alone, without an external signal.</p>
-      </div>
-      <div class="fade-list" style="display:flex;justify-content:center">
-        <!-- diagram -->
-        <svg viewBox="0 0 360 360" width="100%" style="max-width:380px">
-          <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e0b54e"/><stop offset="1" stop-color="#b87333"/></linearGradient>
-          </defs>
-          <rect x="8" y="8" width="344" height="344" rx="16" fill="#0e0a06" stroke="#3a2c18"/>
-          <!-- grid -->
-          <g stroke="#241b10" stroke-width="1">
-            <line x1="92" y1="8" x2="92" y2="352"/><line x1="180" y1="8" x2="180" y2="352"/><line x1="268" y1="8" x2="268" y2="352"/>
-            <line x1="8" y1="92" x2="352" y2="92"/><line x1="8" y1="180" x2="352" y2="180"/><line x1="8" y1="268" x2="352" y2="268"/>
-          </g>
-          <!-- arc path -->
-          <path d="M70 300 Q120 150 210 130 T320 70" fill="none" stroke="url(#g1)" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>
-          <!-- breadcrumbs -->
-          <g fill="#9ec7e8"><circle cx="70" cy="300" r="3.5"/><circle cx="118" cy="208" r="3.5"/><circle cx="168" cy="158" r="3.5"/><circle cx="232" cy="124" r="3.5"/><circle cx="290" cy="92" r="3.5"/></g>
-          <!-- one highlighted arc slice -->
-          <path d="M168 158 A 70 70 0 0 1 232 124" fill="none" stroke="#f1e3c5" stroke-width="2.5"/>
-          <circle cx="168" cy="158" r="5" fill="#e0b54e"/>
-          <circle cx="232" cy="124" r="5" fill="#e0b54e"/>
-          <text x="178" y="115" fill="#b29a72" font-family="monospace" font-size="13">Δarc</text>
-          <!-- robot at start -->
-          <g transform="translate(70 300) rotate(-30)">
-            <rect x="-15" y="-15" width="30" height="30" rx="4" fill="#b87333" stroke="#f1e3c5"/>
-            <line x1="0" y1="0" x2="0" y2="-22" stroke="#f1e3c5" stroke-width="2.5"/>
-          </g>
-          <text x="300" y="78" fill="#e0b54e" font-family="monospace" font-size="13" text-anchor="end">(x, y, θ)</text>
-        </svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 7 · CODE (readable) ============ -->
-  <section class="slide" data-notes="Per the rubric I'm NOT walking through code — just showing two short, readable pieces. Left: the heart of the algorithm, the part that turns one tiny motion into a position update. Right: what it looks like to USE it, which is the whole point — the complexity is hidden.">
-    <div class="wrap">
-      <div class="kicker">Readable code excerpts</div>
-      <h2>Complex computation, <span class="accent">simple interface</span></h2>
-      <div class="two" style="margin-top:26px">
+    <!-- ============ 6 · HOW IT WORKS ============ -->
+    <section class="slide"
+      data-notes="The intuition, not the code. Two unpowered wheels on encoders plus a gyro. Every 10 ms read how far each rolled, model that tiny move as a slice of a circle (an arc), rotate it into field coordinates, and add it up. Like drawing your path one breadcrumb at a time. The sim later shows this happening live.">
+      <div class="wrap two">
         <div class="fade-list">
-          <h3>The heart of the tracker</h3>
-<pre><code class="cpp">// each 10ms tick: turn one tiny arc into a
+          <div class="kicker">How it works</div>
+          <h2>Accumulating small <span class="accent">arcs</span></h2>
+          <p style="margin-top:14px">Two <strong>tracking wheels</strong> and an <strong>inertial sensor</strong>. Every
+            <strong>10 ms</strong>:</p>
+          <ul class="clean" style="margin-top:14px">
+            <li>Read wheel travel and turn</li>
+            <li>Model the move as an arc</li>
+            <li>Add it to the field position</li>
+          </ul>
+          <p class="sub" style="margin-top:16px">100 times a second — position from geometry, no signal.</p>
+        </div>
+        <div class="fade-list" style="display:flex;justify-content:center">
+          <!-- diagram -->
+          <svg viewBox="0 0 360 360" width="100%" style="max-width:380px">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#e0b54e" />
+                <stop offset="1" stop-color="#b87333" />
+              </linearGradient>
+            </defs>
+            <rect x="8" y="8" width="344" height="344" rx="16" fill="#0e0a06" stroke="#3a2c18" />
+            <!-- grid -->
+            <g stroke="#241b10" stroke-width="1">
+              <line x1="92" y1="8" x2="92" y2="352" />
+              <line x1="180" y1="8" x2="180" y2="352" />
+              <line x1="268" y1="8" x2="268" y2="352" />
+              <line x1="8" y1="92" x2="352" y2="92" />
+              <line x1="8" y1="180" x2="352" y2="180" />
+              <line x1="8" y1="268" x2="352" y2="268" />
+            </g>
+            <!-- arc path -->
+            <path d="M70 300 Q120 150 210 130 T320 70" fill="none" stroke="url(#g1)" stroke-width="3"
+              stroke-dasharray="2 7" stroke-linecap="round" />
+            <!-- breadcrumbs -->
+            <g fill="#9ec7e8">
+              <circle cx="70" cy="300" r="3.5" />
+              <circle cx="118" cy="208" r="3.5" />
+              <circle cx="168" cy="158" r="3.5" />
+              <circle cx="232" cy="124" r="3.5" />
+              <circle cx="290" cy="92" r="3.5" />
+            </g>
+            <!-- one highlighted arc slice -->
+            <path d="M168 158 A 70 70 0 0 1 232 124" fill="none" stroke="#f1e3c5" stroke-width="2.5" />
+            <circle cx="168" cy="158" r="5" fill="#e0b54e" />
+            <circle cx="232" cy="124" r="5" fill="#e0b54e" />
+            <text x="178" y="115" fill="#b29a72" font-family="monospace" font-size="13">Δarc</text>
+            <!-- robot at start -->
+            <g transform="translate(70 300) rotate(-30)">
+              <rect x="-15" y="-15" width="30" height="30" rx="4" fill="#b87333" stroke="#f1e3c5" />
+              <line x1="0" y1="0" x2="0" y2="-22" stroke="#f1e3c5" stroke-width="2.5" />
+            </g>
+            <text x="300" y="78" fill="#e0b54e" font-family="monospace" font-size="13" text-anchor="end">(x, y,
+              θ)</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 · CODE (readable) ============ -->
+    <section class="slide"
+      data-notes="Per the rubric I'm NOT walking through code — just showing two short, readable pieces. Left: the heart of the algorithm, the part that turns one tiny motion into a position update. Right: what it looks like to USE it, which is the whole point — the complexity is hidden.">
+      <div class="wrap">
+        <div class="kicker">Readable code excerpts</div>
+        <h2>Complex computation, <span class="accent">simple interface</span></h2>
+        <div class="two" style="margin-top:26px">
+          <div class="fade-list">
+            <h3>The heart of the tracker</h3>
+            <pre><code class="cpp">// each 10ms tick: turn one tiny arc into a
 // position change, then add it to the total
 float avgTheta = pose.theta + dTheta / 2.0f;
 pose.x += localY * cos(avgTheta)
@@ -373,537 +998,597 @@ pose.x += localY * cos(avgTheta)
 pose.y += localY * sin(avgTheta)
         - localX * cos(avgTheta);
 pose.theta += dTheta;</code></pre>
-          <div class="codecap">src/odyssey/odometry.cpp — the accumulate step</div>
-        </div>
-        <div class="fade-list">
-          <h3>What a teammate actually writes</h3>
-<pre><code class="cpp">void autonomous() {
+            <div class="codecap">src/odyssey/odometry.cpp — the accumulate step</div>
+          </div>
+          <div class="fade-list">
+            <h3>What a teammate actually writes</h3>
+            <pre><code class="cpp">void autonomous() {
   chassis.setPose(0, 0, 0);       // start here
   chassis.moveToPoint(0, 24, 4000);   // drive up
   chassis.turnToHeading(90, 1000);    // face right
   chassis.moveToPose(24, 24, 90, 4000);
   chassis.follow("skills.txt", 12, 8000);
 }</code></pre>
-          <div class="codecap">All the trig &amp; control theory hidden behind 5 lines.</div>
+            <div class="codecap">All the math hidden behind 5 lines.</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ 8 · MVP / FEATURES ============ -->
-  <section class="slide" data-notes="This is the working MVP. Walk the cards quickly. Then the punchline: it's not just code on my laptop — it's a real published library with versioned releases and a docs website. I met my goals and went past them.">
-    <div class="wrap">
-      <div class="kicker">Current capabilities</div>
-      <h2>What Odyssey <span class="accent">provides</span></h2>
-      <div class="cards c3 fade-list" style="margin-top:26px">
-        <div class="card"><h3>Odometry</h3><p>Arc-based tracking with any combination of wheels and IMU. Falls back to drive encoders, or to wheel-only heading if the IMU fails during a match.</p></div>
-        <div class="card"><h3>PID motions</h3><p>Turn to a heading or point, swing turns, and drive to a point, with tunable exit conditions and slew limiting.</p></div>
-        <div class="card"><h3>Boomerang controller</h3><p><code>moveToPose</code> reaches a position and a final heading in one smooth arc.</p></div>
-        <div class="card"><h3>Pure pursuit</h3><p>Follow smooth paths drawn in a visual editor, loaded from the SD card.</p></div>
-        <div class="card"><h3>Asynchronous motions</h3><p>Start a motion, trigger another mechanism partway through, then wait for completion.</p></div>
-        <div class="card"><h3>Driver control</h3><p>Tank, arcade, and curvature drive with configurable exponential input curves.</p></div>
+    <!-- ============ 8 · MVP / FEATURES ============ -->
+    <section class="slide"
+      data-notes="This is the working MVP. Walk the cards quickly. Then the punchline: it's not just code on my laptop — it's a real published library with versioned releases and a docs website. I met my goals and went past them.">
+      <div class="wrap">
+        <div class="kicker">Current capabilities</div>
+        <h2>What Odyssey <span class="accent">provides</span></h2>
+        <div class="cards c3 fade-list" style="margin-top:26px">
+          <div class="card">
+            <h3>Odometry</h3>
+            <p>Wheels + IMU, with sensor fallbacks.</p>
+          </div>
+          <div class="card">
+            <h3>PID motions</h3>
+            <p>Turns and drives, tunable.</p>
+          </div>
+          <div class="card">
+            <h3>Boomerang controller</h3>
+            <p>Reach a position and heading at once.</p>
+          </div>
+          <div class="card">
+            <h3>Pure pursuit</h3>
+            <p>Follow drawn paths from the SD card.</p>
+          </div>
+          <div class="card">
+            <h3>Asynchronous motions</h3>
+            <p>Trigger mechanisms mid-motion.</p>
+          </div>
+          <div class="card">
+            <h3>Driver control</h3>
+            <p>Tank, arcade, curvature.</p>
+          </div>
+        </div>
+        <div class="note" style="margin-top:22px"><strong>Beyond a minimum product:</strong> installable template,
+          versioned releases, automated builds, and a <span class="em">documentation site</span>.</div>
       </div>
-      <div class="note" style="margin-top:22px"><strong>Beyond a minimum product:</strong> Odyssey is distributed as an installable PROS template with versioned GitHub releases, an auto-updating depot, a continuous-integration build pipeline, and an <span class="em">MkDocs documentation website</span>.</div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ 9 · THE SIM (interactive) ============ -->
-  <section class="slide" id="simSlide" data-notes="Run it! This simulator runs the EXACT odometry math from my C++ — translated to JavaScript — live. Copper robot = where it really is. Blue dashed = where odometry THINKS it is. Drive with the arrow keys or the on-screen pad. Hit 'Sensor noise' to watch error build up over a lap — that's the real-world problem my IMU fallback fights. Hit 'Self-drive' to watch it navigate by its own estimate. Invite a student up to drive.">
-    <div class="wrap" style="max-width:1080px">
-      <div class="kicker" style="justify-content:center">Interactive demonstration</div>
-      <h2 style="text-align:center;margin-bottom:6px">The Odyssey <span class="accent">simulator</span></h2>
-      <p class="sub" style="text-align:center;margin-bottom:18px">This runs the same arc-based odometry algorithm as the C++ library.</p>
-      <div class="sim">
-        <div class="sim-stage"><canvas id="field" width="460" height="460"></canvas></div>
-        <div class="sim-panel">
-          <div class="read">
-            <h4>Telemetry</h4>
-            <div class="readrow truth"><span class="lbl">TRUE&nbsp;&nbsp;x, y</span><span class="val" id="tPos">0.0, 0.0</span></div>
-            <div class="readrow truth"><span class="lbl">TRUE&nbsp;&nbsp;heading</span><span class="val" id="tH">0°</span></div>
-            <div class="readrow odom"><span class="lbl">ODOM&nbsp;x, y</span><span class="val" id="oPos">0.0, 0.0</span></div>
-            <div class="readrow odom"><span class="lbl">ODOM&nbsp;heading</span><span class="val" id="oH">0°</span></div>
-            <div class="readrow err" id="errRow"><span class="lbl">tracking error</span><span class="val" id="eVal">0.00 in</span></div>
+    <!-- ============ 9 · THE SIM (interactive) ============ -->
+    <section class="slide" id="simSlide"
+      data-notes="Run it! This simulator runs the EXACT odometry math from my C++ — translated to JavaScript — live. Copper robot = where it really is. Blue dashed = where odometry THINKS it is. Drive with the arrow keys or the on-screen pad. Hit 'Sensor noise' to watch error build up over a lap — that's the real-world problem my IMU fallback fights. Hit 'Self-drive' to watch it navigate by its own estimate. Invite a student up to drive.">
+      <div class="wrap" style="max-width:1080px">
+        <div class="kicker" style="justify-content:center">Interactive demonstration</div>
+        <h2 style="text-align:center;margin-bottom:6px">The Odyssey <span class="accent">simulator</span></h2>
+        <p class="sub" style="text-align:center;margin-bottom:18px">This runs the same arc-based odometry algorithm as
+          the C++ library.</p>
+        <div class="sim">
+          <div class="sim-stage"><canvas id="field" width="460" height="460"></canvas></div>
+          <div class="sim-panel">
+            <div class="read">
+              <h4>Telemetry</h4>
+              <div class="readrow truth"><span class="lbl">TRUE&nbsp;&nbsp;x, y</span><span class="val" id="tPos">0.0,
+                  0.0</span></div>
+              <div class="readrow truth"><span class="lbl">TRUE&nbsp;&nbsp;heading</span><span class="val"
+                  id="tH">0°</span></div>
+              <div class="readrow odom"><span class="lbl">ODOM&nbsp;x, y</span><span class="val" id="oPos">0.0,
+                  0.0</span></div>
+              <div class="readrow odom"><span class="lbl">ODOM&nbsp;heading</span><span class="val" id="oH">0°</span>
+              </div>
+              <div class="readrow err" id="errRow"><span class="lbl">tracking error</span><span class="val"
+                  id="eVal">0.00 in</span></div>
+            </div>
+            <div class="legend">
+              <span><span class="sw" style="background:#b87333"></span>True robot</span>
+              <span><span class="sw" style="background:#9ec7e8"></span>Odometry estimate</span>
+            </div>
+            <div class="dpad">
+              <span class="sp"></span>
+              <button data-drive="up">▲</button>
+              <span class="sp"></span>
+              <button data-drive="left">◀</button>
+              <button data-drive="down">▼</button>
+              <button data-drive="right">▶</button>
+            </div>
+            <div class="btns">
+              <button class="btn" id="bNoise">Sensor noise</button>
+              <button class="btn" id="bAuto">Self-drive</button>
+              <button class="btn" id="bTrail">Clear trail</button>
+              <button class="btn" id="bReset">Reset</button>
+            </div>
+            <p class="help"><b>Arrow keys / WASD / pad</b> to drive. <b>Self-drive</b> uses only odometry. <b>Sensor
+                noise</b> shows the estimate drift.</p>
           </div>
-          <div class="legend">
-            <span><span class="sw" style="background:#b87333"></span>True robot</span>
-            <span><span class="sw" style="background:#9ec7e8"></span>Odometry estimate</span>
-          </div>
-          <div class="dpad">
-            <span class="sp"></span>
-            <button data-drive="up">▲</button>
-            <span class="sp"></span>
-            <button data-drive="left">◀</button>
-            <button data-drive="down">▼</button>
-            <button data-drive="right">▶</button>
-          </div>
-          <div class="btns">
-            <button class="btn" id="bNoise">Sensor noise</button>
-            <button class="btn" id="bAuto">Self-drive</button>
-            <button class="btn" id="bTrail">Clear trail</button>
-            <button class="btn" id="bReset">Reset</button>
-          </div>
-          <p class="help">Drive with the <b>arrow keys</b>, <b>WASD</b>, or the pad. <b>Self-drive</b> navigates a square using only the odometry estimate. Enable <b>Sensor noise</b> to observe the estimate drift away from the true position.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ 10 · OBSTACLES ============ -->
-  <section class="slide" data-notes="Be specific and honest here — the rubric rewards real struggle. Biggest one: I literally can't compile this on my Windows laptop (no ARM toolchain), so I built a GitHub Actions pipeline that compiles every push in the cloud. Also: AI gave me code in the wrong coordinate convention and old API, which I had to rework. And error compounding, which I solved with the IMU + fallback.">
-    <div class="wrap">
-      <div class="kicker">Obstacles and solutions</div>
-      <h2>Obstacles encountered</h2>
-      <div class="cards c2 fade-list" style="margin-top:26px">
-        <div class="card"><h3>No local compilation</h3><p>The development laptop has no ARM toolchain, so the V5 code cannot be built locally. <strong>Solution:</strong> a GitHub Actions pipeline compiles every push in the cloud with ARM GCC 14, providing a build check on every change.</p></div>
-        <div class="card"><h3>Two coordinate systems</h3><p>The math uses radians (0 = east, counterclockwise); drivers use compass degrees (0 = north, clockwise). Mixing them produced incorrect motion. <strong>Solution:</strong> use one internal convention, document the conversion, and convert only at the interface.</p></div>
-        <div class="card"><h3>Integrating AI output</h3><p>AI suggestions often used LemLib conventions or the older PROS 3 API and did not compile or match the design. <strong>Solution:</strong> use it to understand concepts, then reimplement within the project's structure and API.</p></div>
-        <div class="card"><h3>Error accumulation</h3><p>A small heading error misdirects all later motion, so drift compounds (visible in the simulator with noise enabled). <strong>Solution:</strong> use the IMU for heading, average two wheels, and fall back to a secondary source if a sensor fails.</p></div>
+    <!-- ============ 10 · OBSTACLES ============ -->
+    <section class="slide"
+      data-notes="Be specific and honest here — the rubric rewards real struggle. Biggest one: I literally can't compile this on my Windows laptop (no ARM toolchain), so I built a GitHub Actions pipeline that compiles every push in the cloud. Also: AI gave me code in the wrong coordinate convention and old API, which I had to rework. And error compounding, which I solved with the IMU + fallback.">
+      <div class="wrap">
+        <div class="kicker">Obstacles and solutions</div>
+        <h2>Obstacles encountered</h2>
+        <div class="cards c2 fade-list" style="margin-top:26px">
+          <div class="card">
+            <h3>No local compilation</h3>
+            <p>Can't build V5 code on the laptop.<br><strong>Fix:</strong> cloud CI compiles every push.</p>
+          </div>
+          <div class="card">
+            <h3>Two coordinate systems</h3>
+            <p>Radians vs. compass degrees mixed up motion.<br><strong>Fix:</strong> one internal convention, convert at
+              the edge.</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ 11 · TESTING ============ -->
-  <section class="slide" data-notes="How I knew it worked. Physical tests on the real robot are the ground truth: drive a known 4-foot square and measure how far off the ending position is. The spin-in-place test isolates whether the wheel offsets are right. Then iterative PID tuning, the simulator as a fast visual test, and automated CI/docs checks on every commit.">
-    <div class="wrap two tight">
-      <div class="fade-list">
-        <div class="kicker">Testing and iteration</div>
-        <h2>Testing and <span class="accent">iteration</span></h2>
-        <p class="lead" style="margin-top:14px">Odometry is only useful if it is accurate, so it was tested against physical measurements and adjusted until the reported position matched reality.</p>
-        <div class="note" style="margin-top:18px">Diagnostic principle: <strong>drift while spinning</strong> indicates incorrect wheel offsets; <strong>drift while driving straight</strong> indicates incorrect wheel size. Separating the two made tuning systematic.</div>
-      </div>
-      <div class="fade-list">
-        <ul class="clean">
-          <li><strong>Square test.</strong><small>Drive a known 4 ft square, measure how far the robot ends from the start, and compare to the reported position.</small></li>
-          <li><strong>Spin-in-place test.</strong><small>Rotate in place repeatedly and confirm the position barely changes, which isolates the tracking-wheel offsets.</small></li>
-          <li><strong>Iterative PID tuning.</strong><small>Repeated commits adjusting gains until motions stopped overshooting and oscillating.</small></li>
-          <li><strong>Simulator.</strong><small>A visual test bench to observe the estimate diverge without using the robot.</small></li>
-          <li><strong>Automated checks.</strong><small>CI compiles every push; documentation builds in strict mode to catch broken links.</small></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 12 · WHAT I LEARNED ============ -->
-  <section class="slide" data-notes="Zoom out to what transfers beyond VEX. The math became real, I learned concurrency and control theory, and — maybe most valuable — how to ship and document software for other people, not just make it work once on my machine.">
-    <div class="wrap">
-      <div class="kicker">What I learned</div>
-      <h2>What I learned</h2>
-      <div class="cards c3 fade-list" style="margin-top:28px">
-        <div class="card"><h3>Applied mathematics</h3><p>Trigonometry, arcs, and coordinate-frame transformations applied to a working system.</p></div>
-        <div class="card"><h3>Concurrency</h3><p>Running tracking in a background task safely, using mutexes and handling race conditions.</p></div>
-        <div class="card"><h3>Control theory</h3><p>How PID feedback converts a position error into a smooth, settling motor command.</p></div>
-        <div class="card"><h3>Software distribution</h3><p>Versioned releases, continuous integration, semantic versioning, and packaging for installation.</p></div>
-        <div class="card"><h3>Writing for users</h3><p>Documentation, examples, and APIs designed for use without the author present.</p></div>
-        <div class="card"><h3>Reading source code</h3><p>Learning a concept by studying existing open-source projects.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 13 · DIFFERENTLY / FUTURE ============ -->
-  <section class="slide" data-notes="The 'loose threads' the rubric specifically asks for. Be candid: I'd add motion profiling for smoother accel, build the simulator into a real off-robot replay tool (this slide is the seed of that), add automated unit tests, and honestly I'd consider fusing sensors with a Kalman filter if I started over. Showing I'd scrap parts and rebuild is encouraged.">
-    <div class="wrap two">
-      <div class="fade-list">
-        <div class="kicker">Future work</div>
-        <h2>Future <span class="accent">improvements</span></h2>
-        <p class="lead" style="margin-top:14px">The current version meets its goals. Several improvements would form the next version, and some components would be rebuilt.</p>
-        <div class="note" style="margin-top:18px">A larger change would be replacing the sensor handling with a <strong>Kalman filter</strong> that statistically combines the IMU, wheels, and the V5 GPS sensor, instead of using one source at a time.</div>
-      </div>
-      <div class="fade-list">
-        <ul class="clean">
-          <li><strong>Motion profiling.</strong><small>Trapezoidal or S-curve velocity for smoother, faster, more repeatable motions.</small></li>
-          <li><strong>Expand the simulator.</strong><small>An off-robot path simulator and match replay tool, prototyped by this demonstration.</small></li>
-          <li><strong>Automated unit tests.</strong><small>Test the math in isolation so a change cannot silently break tracking.</small></li>
-          <li><strong>Kalman sensor fusion.</strong><small>Combine all sensors statistically rather than using fallback only.</small></li>
-          <li><strong>More configurations.</strong><small>Simpler setup for teams with different sensor combinations.</small></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 14 · REFERENCES ============ -->
-  <section class="slide" data-notes="Be transparent about sources, especially AI. Show my first prompt was conceptual ('explain the math'), and later prompts were targeted debugging and review. The honest framing: AI was a tutor and a rubber duck, not the author — I rewrote what it gave me.">
-    <div class="wrap">
-      <div class="kicker">References and AI use</div>
-      <h2>References and AI use</h2>
-      <div class="two" style="margin-top:24px;align-items:start">
+    <!-- ============ 11 · TESTING ============ -->
+    <section class="slide"
+      data-notes="How I knew it worked. Physical tests on the real robot are the ground truth: drive a known 4-foot square and measure how far off the ending position is. The spin-in-place test isolates whether the wheel offsets are right. Then iterative PID tuning, the simulator as a fast visual test, and automated CI/docs checks on every commit.">
+      <div class="wrap two tight">
         <div class="fade-list">
-          <h3>Sources &amp; tools</h3>
-          <ul class="clean" style="margin-top:8px">
-            <li><strong>5225A Pilons</strong> — <em>Introduction to Position Tracking</em> (the core whitepaper)</li>
-            <li><strong>LemLib</strong> &amp; <strong>EZ-Template</strong> — open-source VEX libraries I studied for API design</li>
-            <li><strong>PROS</strong> documentation — the V5 C++ API &amp; kernel</li>
-            <li><strong>path.jerryio</strong> — the visual path editor my pure-pursuit reads from</li>
-            <li><strong>Tools:</strong> GitHub Actions, MkDocs Material, semantic versioning</li>
+          <div class="kicker">Testing and iteration</div>
+          <h2>Testing and <span class="accent">iteration</span></h2>
+          <p class="lead" style="margin-top:14px">Tested against physical measurements until it matched reality.</p>
+          <div class="note" style="margin-top:18px">Drift while <strong>spinning</strong> = wrong offsets. Drift while
+            <strong>straight</strong> = wrong wheel size.</div>
+        </div>
+        <div class="fade-list">
+          <ul class="clean">
+            <li><strong>Square test.</strong><small>Drive a known square, measure the error.</small></li>
+            <li><strong>Spin-in-place test.</strong><small>Position should not move — checks offsets.</small></li>
+            <li><strong>PID tuning.</strong><small>Adjust gains until smooth.</small></li>
+            <li><strong>Simulator.</strong><small>Visual test without the robot.</small></li>
+            <li><strong>Automated checks.</strong><small>CI build and docs checks.</small></li>
           </ul>
         </div>
-        <div class="fade-list">
-          <h3>AI usage</h3>
-          <div class="card" style="margin-top:8px">
-            <p>AI was used, with careful prompting, to help build most of the program and this presentation. It explained concepts, drafted code and content, and helped find bugs, while the design, conventions, and final implementation were directed and reviewed throughout.</p>
+      </div>
+    </section>
+
+    <!-- ============ 12 · WHAT I LEARNED ============ -->
+    <section class="slide"
+      data-notes="Zoom out to what transfers beyond VEX. The math became real, I learned concurrency and control theory, and — maybe most valuable — how to ship and document software for other people, not just make it work once on my machine.">
+      <div class="wrap">
+        <div class="kicker">What I learned</div>
+        <h2>What I learned</h2>
+        <div class="cards c3 fade-list" style="margin-top:28px">
+          <div class="card">
+            <h3>Applied mathematics</h3>
+            <p>Trig and coordinate frames, applied.</p>
+          </div>
+          <div class="card">
+            <h3>Concurrency</h3>
+            <p>Background tasks.</p>
+          </div>
+          <div class="card">
+            <h3>Control theory</h3>
+            <p>PID feedback.</p>
+          </div>
+          <div class="card">
+            <h3>Software distribution</h3>
+            <p>Releases, CI, versioning.</p>
+          </div>
+          <div class="card">
+            <h3>Writing for users</h3>
+            <p>Docs and clean APIs.</p>
+          </div>
+          <div class="card">
+            <h3>Reading source code</h3>
+            <p>Learning from open source.</p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ 15 · THANKS / Q&A ============ -->
-  <section class="slide" data-notes="Wrap up and open the floor. Recap one line, then invite questions — and invite anyone up to drive the simulator. Thank them.">
-    <div class="title-wrap wrap">
-      <img class="title-logo" src="../docs/assets/logo.svg" alt="Odyssey logo">
-      <h1 style="font-size:clamp(36px,7vw,84px)">Thank you</h1>
-      <p class="lead" style="margin-top:12px">Odyssey: an odometry and motion control library for VEX V5, built with trigonometry, an inertial sensor, and iterative testing.</p>
-      <div class="pillrow" style="justify-content:center;margin-top:22px">
-        <span class="pill">Questions</span>
-        <span class="pill">Try the simulator</span>
-        <span class="pill">jonahchang207.github.io/odyssey</span>
+    <!-- ============ 13 · DIFFERENTLY / FUTURE ============ -->
+    <section class="slide"
+      data-notes="The 'loose threads' the rubric specifically asks for. Be candid: I'd add motion profiling for smoother accel, build the simulator into a real off-robot replay tool (this slide is the seed of that), add automated unit tests, and honestly I'd consider fusing sensors with a Kalman filter if I started over. Showing I'd scrap parts and rebuild is encouraged.">
+      <div class="wrap two">
+        <div class="fade-list">
+          <div class="kicker">Future work</div>
+          <h2>Future <span class="accent">improvements</span></h2>
+          <p class="lead" style="margin-top:14px">The goals are met; a future version would refine and rebuild several
+            parts.</p>
+        </div>
+        <div class="fade-list">
+          <ul class="clean">
+            <li><strong>Motion profiling.</strong><small>Smoother velocity control.</small></li>
+            <li><strong>Expand the simulator.</strong><small>Off-robot path and replay tool.</small></li>
+            <li><strong>Unit tests.</strong><small>Protect the math from changes.</small></li>
+            <li><strong>Kalman fusion.</strong><small>Combine all sensors at once.</small></li>
+            <li><strong>More configurations.</strong><small>Easier setup for any robot.</small></li>
+          </ul>
+        </div>
       </div>
-      <p class="sub" style="margin-top:26px">Jonah Chang · AP CS A Final Project</p>
-    </div>
-  </section>
+    </section>
 
-</div><!-- /deck -->
+    <!-- ============ 14 · REFERENCES ============ -->
+    <section class="slide"
+      data-notes="Be transparent about sources, especially AI. Show my first prompt was conceptual ('explain the math'), and later prompts were targeted debugging and review. The honest framing: AI was a tutor and a rubber duck, not the author — I rewrote what it gave me.">
+      <div class="wrap">
+        <div class="kicker">References and AI use</div>
+        <h2>References and AI use</h2>
+        <div class="two" style="margin-top:24px;align-items:start">
+          <div class="fade-list">
+            <h3>Sources &amp; tools</h3>
+            <ul class="clean" style="margin-top:8px">
+              <li><strong>5225A Pilons</strong> — position-tracking whitepaper</li>
+              <li><strong>LemLib</strong> &amp; <strong>EZ-Template</strong> — studied for API design</li>
+              <li><strong>PROS</strong> — the V5 C++ API</li>
+              <li><strong>path.jerryio</strong> — visual path editor</li>
+              <li><strong>Tools</strong> — GitHub Actions, MkDocs</li>
+            </ul>
+          </div>
+          <div class="fade-list">
+            <h3>AI usage</h3>
+            <div class="card" style="margin-top:8px">
+              <p>AI helped build much of the code and slides through careful prompting. The design, conventions, and
+                final implementation were directed and reviewed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- chrome -->
-<button class="nav left" id="navPrev" aria-label="Previous">‹</button>
-<button class="nav right" id="navNext" aria-label="Next">›</button>
-<div class="dots" id="dots"></div>
-<div class="counter"><b id="cur">1</b> / <span id="tot">15</span></div>
-<div class="hint" id="hint">← → to navigate · <b>N</b> notes · <b>F</b> fullscreen</div>
+    <!-- ============ 15 · THANKS / Q&A ============ -->
+    <section class="slide"
+      data-notes="Wrap up and open the floor. Recap one line, then invite questions — and invite anyone up to drive the simulator. Thank them.">
+      <div class="title-wrap wrap">
+        <img class="title-logo" src="../docs/assets/logo.svg" alt="Odyssey logo">
+        <h1 style="font-size:clamp(36px,7vw,84px)">Thank you</h1>
+        <p class="lead" style="margin-top:12px">A robot that knows where it is.</p>
+        <div class="pillrow" style="justify-content:center;margin-top:22px">
+          <span class="pill">Questions</span>
+          <span class="pill">Try the simulator</span>
+          <span class="pill">jonahchang207.github.io/odyssey</span>
+        </div>
+        <p class="sub" style="margin-top:26px">Jonah Chang · AP CS A Final Project</p>
+      </div>
+    </section>
 
-<div class="notes" id="notes">
-  <span class="x" id="notesX">close (N)</span>
-  <h4>Speaker notes</h4>
-  <ul id="notesBody"></ul>
-</div>
+  </div><!-- /deck -->
 
-<script>
-/* ===================================================================
- *  SLIDESHOW ENGINE
- * =================================================================== */
-const slides = [...document.querySelectorAll('.slide')];
-const dotsEl = document.getElementById('dots');
-const progress = document.getElementById('progress');
-const curEl = document.getElementById('cur');
-const totEl = document.getElementById('tot');
-const notesEl = document.getElementById('notes');
-const notesBody = document.getElementById('notesBody');
-let i = 0;
-totEl.textContent = slides.length;
+  <!-- chrome -->
+  <button class="nav left" id="navPrev" aria-label="Previous">‹</button>
+  <button class="nav right" id="navNext" aria-label="Next">›</button>
+  <div class="dots" id="dots"></div>
+  <div class="counter"><b id="cur">1</b> / <span id="tot">15</span></div>
+  <div class="hint" id="hint">← → to navigate · <b>N</b> notes · <b>F</b> fullscreen</div>
 
-slides.forEach((_, n) => {
-  const b = document.createElement('button');
-  b.className = 'dot'; b.setAttribute('aria-label', 'Slide ' + (n+1));
-  b.onclick = () => go(n);
-  dotsEl.appendChild(b);
-});
-const dots = [...dotsEl.children];
+  <div class="notes" id="notes">
+    <span class="x" id="notesX">close (N)</span>
+    <h4>Speaker notes</h4>
+    <ul id="notesBody"></ul>
+  </div>
 
-function go(n){
-  n = Math.max(0, Math.min(slides.length - 1, n));
-  slides[i].classList.remove('active');
-  slides[i].classList.toggle('prev', n > i);
-  i = n;
-  slides[i].classList.add('active');
-  slides[i].classList.remove('prev');
-  dots.forEach((d, k) => d.classList.toggle('on', k === i));
-  curEl.textContent = i + 1;
-  progress.style.width = ((i) / (slides.length - 1) * 100) + '%';
-  renderNotes();
-  simSetActive(slides[i].id === 'simSlide');
-}
-function next(){ go(i + 1); }
-function prev(){ go(i - 1); }
+  <script>
+    /* ===================================================================
+     *  SLIDESHOW ENGINE
+     * =================================================================== */
+    const slides = [...document.querySelectorAll('.slide')];
+    const dotsEl = document.getElementById('dots');
+    const progress = document.getElementById('progress');
+    const curEl = document.getElementById('cur');
+    const totEl = document.getElementById('tot');
+    const notesEl = document.getElementById('notes');
+    const notesBody = document.getElementById('notesBody');
+    let i = 0;
+    totEl.textContent = slides.length;
 
-function renderNotes(){
-  const t = slides[i].dataset.notes || 'No notes for this slide.';
-  notesBody.innerHTML = '';
-  const li = document.createElement('li'); li.textContent = t; notesBody.appendChild(li);
-}
+    slides.forEach((_, n) => {
+      const b = document.createElement('button');
+      b.className = 'dot'; b.setAttribute('aria-label', 'Slide ' + (n + 1));
+      b.onclick = () => go(n);
+      dotsEl.appendChild(b);
+    });
+    const dots = [...dotsEl.children];
 
-document.getElementById('navNext').onclick = next;
-document.getElementById('navPrev').onclick = prev;
-document.getElementById('notesX').onclick = () => notesEl.classList.remove('show');
+    function go(n) {
+      n = Math.max(0, Math.min(slides.length - 1, n));
+      slides[i].classList.remove('active');
+      slides[i].classList.toggle('prev', n > i);
+      i = n;
+      slides[i].classList.add('active');
+      slides[i].classList.remove('prev');
+      dots.forEach((d, k) => d.classList.toggle('on', k === i));
+      curEl.textContent = i + 1;
+      progress.style.width = ((i) / (slides.length - 1) * 100) + '%';
+      renderNotes();
+      simSetActive(slides[i].id === 'simSlide');
+    }
+    function next() { go(i + 1); }
+    function prev() { go(i - 1); }
 
-document.addEventListener('keydown', e => {
-  // let the sim capture arrows/WASD when its slide is active
-  const onSim = slides[i].id === 'simSlide';
-  const driveKey = ['ArrowUp','ArrowDown','KeyW','KeyS','KeyA','KeyD'].includes(e.code)
-                 || (onSim && ['ArrowLeft','ArrowRight'].includes(e.code));
-  if (onSim && driveKey) return; // handled by sim
-  switch(e.code){
-    case 'ArrowRight': case 'PageDown': case 'Space': next(); e.preventDefault(); break;
-    case 'ArrowLeft': case 'PageUp': prev(); e.preventDefault(); break;
-    case 'Home': go(0); break;
-    case 'End': go(slides.length - 1); break;
-    case 'KeyN': notesEl.classList.toggle('show'); break;
-    case 'KeyF':
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-      else document.exitFullscreen?.();
-      break;
-  }
-});
+    function renderNotes() {
+      const t = slides[i].dataset.notes || 'No notes for this slide.';
+      notesBody.innerHTML = '';
+      const li = document.createElement('li'); li.textContent = t; notesBody.appendChild(li);
+    }
 
-// gentle hint on load
-const hint = document.getElementById('hint');
-setTimeout(() => { hint.style.opacity = .9; hint.style.transform = 'translateX(-50%)'; }, 700);
-setTimeout(() => { hint.style.opacity = 0; }, 5200);
+    document.getElementById('navNext').onclick = next;
+    document.getElementById('navPrev').onclick = prev;
+    document.getElementById('notesX').onclick = () => notesEl.classList.remove('show');
 
-/* ===================================================================
- *  SYNTAX HIGHLIGHTER (tiny, for the C++ snippets)
- * =================================================================== */
-(function highlight(){
-  const KW = new Set(['void','int','bool','return','if','else','while','for','true','false','const','auto','struct','class','namespace','new','nullptr','this','float','double']);
-  const TY = new Set(['Chassis','Pose','OdomSensors','TrackingWheel','MotorGroup','Imu','Drivetrain','odyssey','pros','chassis']);
-  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  document.querySelectorAll('code.cpp').forEach(el => {
-    let src = el.textContent;
-    let out = esc(src);
-    out = out.replace(/(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|\b(\d+\.?\d*f?)\b|([A-Za-z_]\w*)(\s*\()|\b([A-Za-z_]\w*)\b/g,
-      (m, com, str, num, fnName, fnParen, word) => {
-        if (com) return '<span class="tok-com">' + com + '</span>';
-        if (str) return '<span class="tok-str">' + str + '</span>';
-        if (num) return '<span class="tok-num">' + num + '</span>';
-        if (fnName) {
-          if (KW.has(fnName)) return '<span class="tok-key">' + fnName + '</span>' + fnParen;
-          if (TY.has(fnName)) return '<span class="tok-type">' + fnName + '</span>' + fnParen;
-          return '<span class="tok-fn">' + fnName + '</span>' + fnParen;
-        }
-        if (word) {
-          if (KW.has(word)) return '<span class="tok-key">' + word + '</span>';
-          if (TY.has(word)) return '<span class="tok-type">' + word + '</span>';
-          return word;
-        }
-        return m;
+    document.addEventListener('keydown', e => {
+      // let the sim capture arrows/WASD when its slide is active
+      const onSim = slides[i].id === 'simSlide';
+      const driveKey = ['ArrowUp', 'ArrowDown', 'KeyW', 'KeyS', 'KeyA', 'KeyD'].includes(e.code)
+        || (onSim && ['ArrowLeft', 'ArrowRight'].includes(e.code));
+      if (onSim && driveKey) return; // handled by sim
+      switch (e.code) {
+        case 'ArrowRight': case 'PageDown': case 'Space': next(); e.preventDefault(); break;
+        case 'ArrowLeft': case 'PageUp': prev(); e.preventDefault(); break;
+        case 'Home': go(0); break;
+        case 'End': go(slides.length - 1); break;
+        case 'KeyN': notesEl.classList.toggle('show'); break;
+        case 'KeyF':
+          if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+          else document.exitFullscreen?.();
+          break;
+      }
+    });
+
+    // gentle hint on load
+    const hint = document.getElementById('hint');
+    setTimeout(() => { hint.style.opacity = .9; hint.style.transform = 'translateX(-50%)'; }, 700);
+    setTimeout(() => { hint.style.opacity = 0; }, 5200);
+
+    /* ===================================================================
+     *  SYNTAX HIGHLIGHTER (tiny, for the C++ snippets)
+     * =================================================================== */
+    (function highlight() {
+      const KW = new Set(['void', 'int', 'bool', 'return', 'if', 'else', 'while', 'for', 'true', 'false', 'const', 'auto', 'struct', 'class', 'namespace', 'new', 'nullptr', 'this', 'float', 'double']);
+      const TY = new Set(['Chassis', 'Pose', 'OdomSensors', 'TrackingWheel', 'MotorGroup', 'Imu', 'Drivetrain', 'odyssey', 'pros', 'chassis']);
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      document.querySelectorAll('code.cpp').forEach(el => {
+        let src = el.textContent;
+        let out = esc(src);
+        out = out.replace(/(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|\b(\d+\.?\d*f?)\b|([A-Za-z_]\w*)(\s*\()|\b([A-Za-z_]\w*)\b/g,
+          (m, com, str, num, fnName, fnParen, word) => {
+            if (com) return '<span class="tok-com">' + com + '</span>';
+            if (str) return '<span class="tok-str">' + str + '</span>';
+            if (num) return '<span class="tok-num">' + num + '</span>';
+            if (fnName) {
+              if (KW.has(fnName)) return '<span class="tok-key">' + fnName + '</span>' + fnParen;
+              if (TY.has(fnName)) return '<span class="tok-type">' + fnName + '</span>' + fnParen;
+              return '<span class="tok-fn">' + fnName + '</span>' + fnParen;
+            }
+            if (word) {
+              if (KW.has(word)) return '<span class="tok-key">' + word + '</span>';
+              if (TY.has(word)) return '<span class="tok-type">' + word + '</span>';
+              return word;
+            }
+            return m;
+          });
+        el.innerHTML = out;
       });
-    el.innerHTML = out;
-  });
-})();
+    })();
 
-/* ===================================================================
- *  THE ODYSSEY SIM
- *  Runs the SAME arc-based odometry as src/odyssey/odometry.cpp,
- *  translated to JS. A simulated "true" robot generates sensor
- *  readings; the algorithm reconstructs the pose from them.
- * =================================================================== */
-(function sim(){
-  const cv = document.getElementById('field');
-  const ctx = cv.getContext('2d');
+    /* ===================================================================
+     *  THE ODYSSEY SIM
+     *  Runs the SAME arc-based odometry as src/odyssey/odometry.cpp,
+     *  translated to JS. A simulated "true" robot generates sensor
+     *  readings; the algorithm reconstructs the pose from them.
+     * =================================================================== */
+    (function sim() {
+      const cv = document.getElementById('field');
+      const ctx = cv.getContext('2d');
 
-  // --- match the example robot in src/main.cpp ---
-  const FIELD = 144;          // inches (12 ft)
-  const TRACK = 11.5;         // track width, in
-  const S_V = -1.25;          // vertical wheel offset (left of center, in)
-  const S_H = -2.5;           // horizontal wheel offset (behind center, in)
-  const MAXSPD = 46;          // in/s
-  const ROBOT = 15;           // robot size, in
+      // --- match the example robot in src/main.cpp ---
+      const FIELD = 144;          // inches (12 ft)
+      const TRACK = 11.5;         // track width, in
+      const S_V = -1.25;          // vertical wheel offset (left of center, in)
+      const S_H = -2.5;           // horizontal wheel offset (behind center, in)
+      const MAXSPD = 46;          // in/s
+      const ROBOT = 15;           // robot size, in
 
-  // crisp canvas
-  const SIZE = 460, PAD = 14, DPR = Math.min(window.devicePixelRatio || 1, 2);
-  cv.width = SIZE * DPR; cv.height = SIZE * DPR;
-  cv.style.width = SIZE + 'px'; cv.style.height = SIZE + 'px';
-  ctx.scale(DPR, DPR);
-  const scale = (SIZE - 2*PAD) / FIELD;
-  const sx = x => PAD + (x + FIELD/2) * scale;
-  const sy = y => PAD + (FIELD/2 - y) * scale;
+      // crisp canvas
+      const SIZE = 460, PAD = 14, DPR = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = SIZE * DPR; cv.height = SIZE * DPR;
+      cv.style.width = SIZE + 'px'; cv.style.height = SIZE + 'px';
+      ctx.scale(DPR, DPR);
+      const scale = (SIZE - 2 * PAD) / FIELD;
+      const sx = x => PAD + (x + FIELD / 2) * scale;
+      const sy = y => PAD + (FIELD / 2 - y) * scale;
 
-  // state — internal heading in math radians (0 = +x, CCW+), like the C++
-  let truth, odom, trail, noise=false, auto=false, active=false, autoIdx=0;
-  function reset(){
-    truth = {x:0, y:0, h:Math.PI/2};   // facing +y = compass 0
-    odom  = {x:0, y:0, h:Math.PI/2};
-    trail = []; autoIdx = 0;
-  }
-  reset();
+      // state — internal heading in math radians (0 = +x, CCW+), like the C++
+      let truth, odom, trail, noise = false, auto = false, active = false, autoIdx = 0;
+      function reset() {
+        truth = { x: 0, y: 0, h: Math.PI / 2 };   // facing +y = compass 0
+        odom = { x: 0, y: 0, h: Math.PI / 2 };
+        trail = []; autoIdx = 0;
+      }
+      reset();
 
-  const square = [{x:0,y:36},{x:36,y:36},{x:36,y:0},{x:0,y:0}];
+      const square = [{ x: 0, y: 36 }, { x: 36, y: 36 }, { x: 36, y: 0 }, { x: 0, y: 0 }];
 
-  // gaussian noise (Box-Muller)
-  let spare=null;
-  function randn(){
-    if(spare!==null){const s=spare;spare=null;return s;}
-    let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();
-    const m=Math.sqrt(-2*Math.log(u));spare=m*Math.sin(2*Math.PI*v);return m*Math.cos(2*Math.PI*v);
-  }
+      // gaussian noise (Box-Muller)
+      let spare = null;
+      function randn() {
+        if (spare !== null) { const s = spare; spare = null; return s; }
+        let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random();
+        const m = Math.sqrt(-2 * Math.log(u)); spare = m * Math.sin(2 * Math.PI * v); return m * Math.cos(2 * Math.PI * v);
+      }
 
-  // ---- the odometry algorithm (mirror of odometry.cpp::update) ----
-  function odomUpdate(dV, dH, dImuDeg){
-    const dTheta = -dImuDeg * Math.PI/180;          // IMU is CW+, internal CCW+
-    const fwdArc = dV - S_V * dTheta;
-    const rgtArc = dH + S_H * dTheta;
-    let localY, localX;
-    if (dTheta === 0){ localY = fwdArc; localX = rgtArc; }
-    else { const c = 2*Math.sin(dTheta/2); localY = c*(fwdArc/dTheta); localX = c*(rgtArc/dTheta); }
-    const avg = odom.h + dTheta/2;
-    odom.x += localY*Math.cos(avg) + localX*Math.sin(avg);
-    odom.y += localY*Math.sin(avg) - localX*Math.cos(avg);
-    odom.h += dTheta;
-  }
+      // ---- the odometry algorithm (mirror of odometry.cpp::update) ----
+      function odomUpdate(dV, dH, dImuDeg) {
+        const dTheta = -dImuDeg * Math.PI / 180;          // IMU is CW+, internal CCW+
+        const fwdArc = dV - S_V * dTheta;
+        const rgtArc = dH + S_H * dTheta;
+        let localY, localX;
+        if (dTheta === 0) { localY = fwdArc; localX = rgtArc; }
+        else { const c = 2 * Math.sin(dTheta / 2); localY = c * (fwdArc / dTheta); localX = c * (rgtArc / dTheta); }
+        const avg = odom.h + dTheta / 2;
+        odom.x += localY * Math.cos(avg) + localX * Math.sin(avg);
+        odom.y += localY * Math.sin(avg) - localX * Math.cos(avg);
+        odom.h += dTheta;
+      }
 
-  // ---- inputs ----
-  const keys = {};
-  addEventListener('keydown', e=>{ if(active){ keys[e.code]=true; } });
-  addEventListener('keyup',   e=>{ keys[e.code]=false; });
-  // on-screen pad
-  document.querySelectorAll('.dpad button').forEach(b=>{
-    const dir=b.dataset.drive;
-    const set=v=>{padState[dir]=v;};
-    b.addEventListener('pointerdown',e=>{e.preventDefault();set(true);});
-    b.addEventListener('pointerup',()=>set(false));
-    b.addEventListener('pointerleave',()=>set(false));
-    b.addEventListener('pointercancel',()=>set(false));
-  });
-  const padState={up:false,down:false,left:false,right:false};
-
-  function readControls(){
-    let th=0, tu=0;
-    if(keys.ArrowUp||keys.KeyW||padState.up) th+=1;
-    if(keys.ArrowDown||keys.KeyS||padState.down) th-=1;
-    if(keys.ArrowRight||keys.KeyD||padState.right) tu+=1;  // turn right = CW
-    if(keys.ArrowLeft||keys.KeyA||padState.left) tu-=1;
-    return {th,tu};
-  }
-
-  function wrap(a){ while(a>Math.PI)a-=2*Math.PI; while(a<-Math.PI)a+=2*Math.PI; return a; }
-
-  function autoControls(){
-    const tgt = square[autoIdx];
-    const dx = tgt.x - odom.x, dy = tgt.y - odom.y;
-    const dist = Math.hypot(dx,dy);
-    if(dist < 3){ autoIdx = (autoIdx+1) % square.length; return {th:0,tu:0}; }
-    const want = Math.atan2(dy,dx);              // desired math heading
-    const aerr = wrap(want - odom.h);            // +aerr => need CCW (left)
-    let tu = Math.max(-1, Math.min(1, -aerr*1.4)); // turn>0 is CW, so negate
-    let th = Math.max(0, Math.min(1, dist*0.07));
-    th *= Math.max(0, Math.cos(aerr));           // don't power forward while mis-aimed
-    return {th,tu};
-  }
-
-  // ---- physics step ----
-  function step(dt){
-    const c = auto ? autoControls() : readControls();
-    let vL = Math.max(-1,Math.min(1, c.th + c.tu)) * MAXSPD;
-    let vR = Math.max(-1,Math.min(1, c.th - c.tu)) * MAXSPD;
-    const dF = (vL+vR)/2 * dt;
-    const dTheta = (vR-vL)/TRACK * dt;           // CCW+ (right faster => CCW)
-
-    // advance the TRUE robot
-    const avg = truth.h + dTheta/2;
-    truth.x += dF*Math.cos(avg);
-    truth.y += dF*Math.sin(avg);
-    truth.h += dTheta;
-    // keep on field
-    const lim = FIELD/2 - ROBOT/2;
-    truth.x = Math.max(-lim,Math.min(lim,truth.x));
-    truth.y = Math.max(-lim,Math.min(lim,truth.y));
-
-    // simulate sensor readings from the true motion
-    let dV = dF + S_V*dTheta;          // vertical wheel delta
-    let dH = -S_H*dTheta;              // horizontal wheel delta (no true strafe)
-    let dImuDeg = -dTheta*180/Math.PI; // IMU is CW+
-    if(noise){
-      const moving = Math.abs(dF)+Math.abs(dTheta*10);
-      dV += randn()*0.012*(1+moving);
-      dH += randn()*0.012*(1+moving);
-      dImuDeg += randn()*0.03 + 0.0016; // small constant bias => compounding drift
-    }
-    odomUpdate(dV, dH, dImuDeg);
-
-    if(Math.hypot(dF,dTheta) > 0.0005){
-      trail.push({x:odom.x,y:odom.y});
-      if(trail.length>900) trail.shift();
-    }
-  }
-
-  // ---- drawing ----
-  function drawRobot(p, fill, dashed){
-    const f={x:Math.cos(p.h),y:Math.sin(p.h)};      // forward (field)
-    const r={x:Math.sin(p.h),y:-Math.cos(p.h)};     // rightward (field)
-    const hl=ROBOT/2, hw=ROBOT/2;
-    const corner=(a,b)=>({x:sx(p.x+a*hl*f.x+b*hw*r.x), y:sy(p.y+a*hl*f.y+b*hw*r.y)});
-    const pts=[corner(1,-1),corner(1,1),corner(-1,1),corner(-1,-1)];
-    ctx.beginPath();
-    ctx.moveTo(pts[0].x,pts[0].y); pts.slice(1).forEach(q=>ctx.lineTo(q.x,q.y)); ctx.closePath();
-    if(dashed){ ctx.setLineDash([5,4]); ctx.lineWidth=2; ctx.strokeStyle=fill; ctx.stroke(); ctx.setLineDash([]); }
-    else { ctx.fillStyle=fill; ctx.fill(); ctx.lineWidth=1.5; ctx.strokeStyle='rgba(241,227,197,.6)'; ctx.stroke(); }
-    // heading indicator
-    ctx.beginPath();
-    ctx.moveTo(sx(p.x),sy(p.y));
-    ctx.lineTo(sx(p.x+f.x*hl*1.15), sy(p.y+f.y*hl*1.15));
-    ctx.lineWidth=dashed?2:2.5; ctx.strokeStyle=dashed?fill:'#f1e3c5'; ctx.stroke();
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,SIZE,SIZE);
-    // field
-    ctx.fillStyle='#171008'; ctx.fillRect(PAD,PAD,FIELD*scale,FIELD*scale);
-    // tiles 24"
-    ctx.strokeStyle='#2a2012'; ctx.lineWidth=1;
-    for(let g=-72;g<=72;g+=24){
-      ctx.beginPath(); ctx.moveTo(sx(g),sy(-72)); ctx.lineTo(sx(g),sy(72)); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(sx(-72),sy(g)); ctx.lineTo(sx(72),sy(g)); ctx.stroke();
-    }
-    // axes
-    ctx.strokeStyle='rgba(201,151,44,.35)'; ctx.lineWidth=1.2;
-    ctx.beginPath(); ctx.moveTo(sx(-72),sy(0)); ctx.lineTo(sx(72),sy(0)); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(sx(0),sy(-72)); ctx.lineTo(sx(0),sy(72)); ctx.stroke();
-    // border
-    ctx.strokeStyle='#3a2c18'; ctx.lineWidth=2; ctx.strokeRect(PAD,PAD,FIELD*scale,FIELD*scale);
-
-    // auto targets
-    if(auto){
-      square.forEach((t,k)=>{
-        ctx.beginPath(); ctx.arc(sx(t.x),sy(t.y),5,0,7);
-        ctx.fillStyle = k===autoIdx ? '#e0b54e' : 'rgba(224,181,78,.35)'; ctx.fill();
+      // ---- inputs ----
+      const keys = {};
+      addEventListener('keydown', e => { if (active) { keys[e.code] = true; } });
+      addEventListener('keyup', e => { keys[e.code] = false; });
+      // on-screen pad
+      document.querySelectorAll('.dpad button').forEach(b => {
+        const dir = b.dataset.drive;
+        const set = v => { padState[dir] = v; };
+        b.addEventListener('pointerdown', e => { e.preventDefault(); set(true); });
+        b.addEventListener('pointerup', () => set(false));
+        b.addEventListener('pointerleave', () => set(false));
+        b.addEventListener('pointercancel', () => set(false));
       });
-    }
-    // trail (odom estimate)
-    if(trail.length>1){
-      ctx.beginPath(); ctx.moveTo(sx(trail[0].x),sy(trail[0].y));
-      for(const p of trail) ctx.lineTo(sx(p.x),sy(p.y));
-      ctx.strokeStyle='rgba(158,199,232,.6)'; ctx.lineWidth=2; ctx.stroke();
-    }
-    drawRobot(truth,'#b87333',false);
-    drawRobot(odom,'#9ec7e8',true);
-  }
+      const padState = { up: false, down: false, left: false, right: false };
 
-  // ---- telemetry ----
-  const tPos=document.getElementById('tPos'), tH=document.getElementById('tH'),
-        oPos=document.getElementById('oPos'), oH=document.getElementById('oH'),
-        eVal=document.getElementById('eVal'), errRow=document.getElementById('errRow');
-  const compass = h => { let d=(90 - h*180/Math.PI)%360; if(d<0)d+=360; return d; };
-  function telemetry(){
-    tPos.textContent = truth.x.toFixed(1)+', '+truth.y.toFixed(1);
-    oPos.textContent = odom.x.toFixed(1)+', '+odom.y.toFixed(1);
-    tH.textContent = compass(truth.h).toFixed(0)+'°';
-    oH.textContent = compass(odom.h).toFixed(0)+'°';
-    const err = Math.hypot(truth.x-odom.x, truth.y-odom.y);
-    eVal.textContent = err.toFixed(2)+' in';
-    errRow.classList.toggle('bad', err>2);
-  }
+      function readControls() {
+        let th = 0, tu = 0;
+        if (keys.ArrowUp || keys.KeyW || padState.up) th += 1;
+        if (keys.ArrowDown || keys.KeyS || padState.down) th -= 1;
+        if (keys.ArrowRight || keys.KeyD || padState.right) tu += 1;  // turn right = CW
+        if (keys.ArrowLeft || keys.KeyA || padState.left) tu -= 1;
+        return { th, tu };
+      }
 
-  // ---- loop ----
-  let last=0;
-  function loop(t){
-    const dt = Math.min(0.05, (t-last)/1000 || 0); last=t;
-    if(active){ step(dt); draw(); telemetry(); }
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
+      function wrap(a) { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a; }
 
-  // ---- buttons ----
-  const bNoise=document.getElementById('bNoise'), bAuto=document.getElementById('bAuto'),
-        bTrail=document.getElementById('bTrail'), bReset=document.getElementById('bReset');
-  bNoise.onclick=()=>{ noise=!noise; bNoise.classList.toggle('on',noise); };
-  bAuto.onclick =()=>{ auto=!auto; bAuto.classList.toggle('on',auto); };
-  bTrail.onclick=()=>{ trail=[]; };
-  bReset.onclick=()=>{ reset(); bAuto.classList.remove('on'); auto=false; };
+      function autoControls() {
+        const tgt = square[autoIdx];
+        const dx = tgt.x - odom.x, dy = tgt.y - odom.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 3) { autoIdx = (autoIdx + 1) % square.length; return { th: 0, tu: 0 }; }
+        const want = Math.atan2(dy, dx);              // desired math heading
+        const aerr = wrap(want - odom.h);            // +aerr => need CCW (left)
+        let tu = Math.max(-1, Math.min(1, -aerr * 1.4)); // turn>0 is CW, so negate
+        let th = Math.max(0, Math.min(1, dist * 0.07));
+        th *= Math.max(0, Math.cos(aerr));           // don't power forward while mis-aimed
+        return { th, tu };
+      }
 
-  // draw once even before activated so the slide isn't blank
-  draw(); telemetry();
-  window.simSetActive = v => { active=v; if(v) last=performance.now(); };
-})();
+      // ---- physics step ----
+      function step(dt) {
+        const c = auto ? autoControls() : readControls();
+        let vL = Math.max(-1, Math.min(1, c.th + c.tu)) * MAXSPD;
+        let vR = Math.max(-1, Math.min(1, c.th - c.tu)) * MAXSPD;
+        const dF = (vL + vR) / 2 * dt;
+        const dTheta = (vR - vL) / TRACK * dt;           // CCW+ (right faster => CCW)
 
-go(0);
-</script>
+        // advance the TRUE robot
+        const avg = truth.h + dTheta / 2;
+        truth.x += dF * Math.cos(avg);
+        truth.y += dF * Math.sin(avg);
+        truth.h += dTheta;
+        // keep on field
+        const lim = FIELD / 2 - ROBOT / 2;
+        truth.x = Math.max(-lim, Math.min(lim, truth.x));
+        truth.y = Math.max(-lim, Math.min(lim, truth.y));
+
+        // simulate sensor readings from the true motion
+        let dV = dF + S_V * dTheta;          // vertical wheel delta
+        let dH = -S_H * dTheta;              // horizontal wheel delta (no true strafe)
+        let dImuDeg = -dTheta * 180 / Math.PI; // IMU is CW+
+        if (noise) {
+          const moving = Math.abs(dF) + Math.abs(dTheta * 10);
+          dV += randn() * 0.012 * (1 + moving);
+          dH += randn() * 0.012 * (1 + moving);
+          dImuDeg += randn() * 0.03 + 0.0016; // small constant bias => compounding drift
+        }
+        odomUpdate(dV, dH, dImuDeg);
+
+        if (Math.hypot(dF, dTheta) > 0.0005) {
+          trail.push({ x: odom.x, y: odom.y });
+          if (trail.length > 900) trail.shift();
+        }
+      }
+
+      // ---- drawing ----
+      function drawRobot(p, fill, dashed) {
+        const f = { x: Math.cos(p.h), y: Math.sin(p.h) };      // forward (field)
+        const r = { x: Math.sin(p.h), y: -Math.cos(p.h) };     // rightward (field)
+        const hl = ROBOT / 2, hw = ROBOT / 2;
+        const corner = (a, b) => ({ x: sx(p.x + a * hl * f.x + b * hw * r.x), y: sy(p.y + a * hl * f.y + b * hw * r.y) });
+        const pts = [corner(1, -1), corner(1, 1), corner(-1, 1), corner(-1, -1)];
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y); pts.slice(1).forEach(q => ctx.lineTo(q.x, q.y)); ctx.closePath();
+        if (dashed) { ctx.setLineDash([5, 4]); ctx.lineWidth = 2; ctx.strokeStyle = fill; ctx.stroke(); ctx.setLineDash([]); }
+        else { ctx.fillStyle = fill; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(241,227,197,.6)'; ctx.stroke(); }
+        // heading indicator
+        ctx.beginPath();
+        ctx.moveTo(sx(p.x), sy(p.y));
+        ctx.lineTo(sx(p.x + f.x * hl * 1.15), sy(p.y + f.y * hl * 1.15));
+        ctx.lineWidth = dashed ? 2 : 2.5; ctx.strokeStyle = dashed ? fill : '#f1e3c5'; ctx.stroke();
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, SIZE, SIZE);
+        // field
+        ctx.fillStyle = '#171008'; ctx.fillRect(PAD, PAD, FIELD * scale, FIELD * scale);
+        // tiles 24"
+        ctx.strokeStyle = '#2a2012'; ctx.lineWidth = 1;
+        for (let g = -72; g <= 72; g += 24) {
+          ctx.beginPath(); ctx.moveTo(sx(g), sy(-72)); ctx.lineTo(sx(g), sy(72)); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(sx(-72), sy(g)); ctx.lineTo(sx(72), sy(g)); ctx.stroke();
+        }
+        // axes
+        ctx.strokeStyle = 'rgba(201,151,44,.35)'; ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(sx(-72), sy(0)); ctx.lineTo(sx(72), sy(0)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(sx(0), sy(-72)); ctx.lineTo(sx(0), sy(72)); ctx.stroke();
+        // border
+        ctx.strokeStyle = '#3a2c18'; ctx.lineWidth = 2; ctx.strokeRect(PAD, PAD, FIELD * scale, FIELD * scale);
+
+        // auto targets
+        if (auto) {
+          square.forEach((t, k) => {
+            ctx.beginPath(); ctx.arc(sx(t.x), sy(t.y), 5, 0, 7);
+            ctx.fillStyle = k === autoIdx ? '#e0b54e' : 'rgba(224,181,78,.35)'; ctx.fill();
+          });
+        }
+        // trail (odom estimate)
+        if (trail.length > 1) {
+          ctx.beginPath(); ctx.moveTo(sx(trail[0].x), sy(trail[0].y));
+          for (const p of trail) ctx.lineTo(sx(p.x), sy(p.y));
+          ctx.strokeStyle = 'rgba(158,199,232,.6)'; ctx.lineWidth = 2; ctx.stroke();
+        }
+        drawRobot(truth, '#b87333', false);
+        drawRobot(odom, '#9ec7e8', true);
+      }
+
+      // ---- telemetry ----
+      const tPos = document.getElementById('tPos'), tH = document.getElementById('tH'),
+        oPos = document.getElementById('oPos'), oH = document.getElementById('oH'),
+        eVal = document.getElementById('eVal'), errRow = document.getElementById('errRow');
+      const compass = h => { let d = (90 - h * 180 / Math.PI) % 360; if (d < 0) d += 360; return d; };
+      function telemetry() {
+        tPos.textContent = truth.x.toFixed(1) + ', ' + truth.y.toFixed(1);
+        oPos.textContent = odom.x.toFixed(1) + ', ' + odom.y.toFixed(1);
+        tH.textContent = compass(truth.h).toFixed(0) + '°';
+        oH.textContent = compass(odom.h).toFixed(0) + '°';
+        const err = Math.hypot(truth.x - odom.x, truth.y - odom.y);
+        eVal.textContent = err.toFixed(2) + ' in';
+        errRow.classList.toggle('bad', err > 2);
+      }
+
+      // ---- loop ----
+      let last = 0;
+      function loop(t) {
+        const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
+        if (active) { step(dt); draw(); telemetry(); }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      // ---- buttons ----
+      const bNoise = document.getElementById('bNoise'), bAuto = document.getElementById('bAuto'),
+        bTrail = document.getElementById('bTrail'), bReset = document.getElementById('bReset');
+      bNoise.onclick = () => { noise = !noise; bNoise.classList.toggle('on', noise); };
+      bAuto.onclick = () => { auto = !auto; bAuto.classList.toggle('on', auto); };
+      bTrail.onclick = () => { trail = []; };
+      bReset.onclick = () => { reset(); bAuto.classList.remove('on'); auto = false; };
+
+      // draw once even before activated so the slide isn't blank
+      draw(); telemetry();
+      window.simSetActive = v => { active = v; if (v) last = performance.now(); };
+    })();
+
+    go(0);
+  </script>
 </body>
+
 </html>
