@@ -15,6 +15,10 @@ turns and drives, boomerang `moveToPose`, and pure pursuit path following —
 inspired by [LemLib](https://github.com/LemLib/LemLib) and
 [EZ-Template](https://github.com/EZ-Robotics/EZ-Template).
 
+An optional Monte Carlo localization layer can run from V5 Distance Sensors in
+shadow mode, while preserving raw odometry as the default driving pose. See the
+[MCL architecture and validation guide](docs/explanation/monte-carlo-localization.md).
+
 ## 📖 Documentation
 
 **Everything lives at [jonahchang207.github.io/odyssey](https://jonahchang207.github.io/odyssey/)** —

@@ -63,6 +63,7 @@ constexpr float OLD_4 = 4.18;
 ```cpp
 void setSensors(OdomSensors sensors); // called by Chassis::calibrate
 Pose getPose(bool radians = false);
+OdometryState getOdometryState(); // math-radian pose + reset generation
 void setPose(Pose pose, bool radians = false);
 void update();        // one tracking step; the background task calls this
 void initOdometry();  // reset baselines + start the 10 ms tracking task

@@ -28,6 +28,7 @@ namespace odyssey {
 static OdomSensors odomSensors = {nullptr, nullptr, nullptr, nullptr, nullptr};
 // default pose: origin, facing compass 0 (+y), which is pi/2 in math radians
 static Pose odomPose(0, 0, M_PI_2);
+static std::uint32_t resetGeneration = 0;
 
 static float prevVertical1 = 0;
 static float prevVertical2 = 0;
@@ -48,10 +49,18 @@ Pose getPose(bool radians) {
     return Pose(pose.x, pose.y, 90.0f - radToDeg(pose.theta));
 }
 
+OdometryState getOdometryState() {
+    poseMutex.take(TIMEOUT_MAX);
+    const OdometryState state{odomPose, resetGeneration};
+    poseMutex.give();
+    return state;
+}
+
 void setPose(Pose pose, bool radians) {
     const float theta = radians ? pose.theta : degToRad(90.0f - pose.theta);
     poseMutex.take(TIMEOUT_MAX);
     odomPose = Pose(pose.x, pose.y, theta);
+    resetGeneration++;
     poseMutex.give();
 }
 
