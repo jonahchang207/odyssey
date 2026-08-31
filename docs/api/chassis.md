@@ -52,6 +52,10 @@ void setPose(Pose pose, bool radians = false);
 Pose getPose(bool radians = false) const;
 ```
 
+`getPose` returns raw odometry unless optional MCL correction mode is enabled
+and its confidence gates pass. `getOdometryPose()` always exposes the unchanged
+raw pose; see the [Localization API](localization.md).
+
 Inches; compass degrees by default, standard math radians when
 `radians = true`.
 

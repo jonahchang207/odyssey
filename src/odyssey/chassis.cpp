@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "odyssey/chassis.hpp"
+#include "odyssey/localization.hpp"
 #include "pros/misc.hpp"
 #include "pros/rtos.hpp"
 
@@ -75,11 +76,15 @@ void Chassis::calibrate(bool calibrateImu) {
 
 void Chassis::setPose(float x, float y, float theta, bool radians) {
     odyssey::setPose(Pose(x, y, theta), radians);
+    resetLocalization();
 }
 
-void Chassis::setPose(Pose pose, bool radians) { odyssey::setPose(pose, radians); }
+void Chassis::setPose(Pose pose, bool radians) {
+    odyssey::setPose(pose, radians);
+    resetLocalization();
+}
 
-Pose Chassis::getPose(bool radians) const { return odyssey::getPose(radians); }
+Pose Chassis::getPose(bool radians) const { return getLocalizationOutputPose(radians); }
 
 // ----------------------------------------------------------------------------
 // motion management

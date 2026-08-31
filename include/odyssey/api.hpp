@@ -11,4 +11,6 @@
 #include "odyssey/trackingwheel.hpp"
 #include "odyssey/drivecurve.hpp"
 #include "odyssey/odometry.hpp"
+#include "odyssey/mcl.hpp"
+#include "odyssey/localization.hpp"
 #include "odyssey/chassis.hpp"

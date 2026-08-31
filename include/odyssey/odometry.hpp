@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "odyssey/pose.hpp"
 #include "odyssey/trackingwheel.hpp"
 #include "pros/imu.hpp"
@@ -29,6 +31,14 @@ struct OdomSensors {
         pros::Imu* imu = nullptr;
 };
 
+/** Atomic snapshot used by consumers that need to detect explicit pose resets. */
+struct OdometryState {
+        /** raw odometry pose in standard math radians */
+        Pose pose;
+        /** increments whenever setPose is called */
+        std::uint32_t resetGeneration = 0;
+};
+
 /**
  * @brief Set the sensors odometry will use. Called by Chassis::calibrate
  */
@@ -42,6 +52,9 @@ void setSensors(OdomSensors sensors);
  *        (0 = +x, counterclockwise positive)
  */
 Pose getPose(bool radians = false);
+
+/** Get raw math-frame odometry pose and reset generation under one lock. */
+OdometryState getOdometryState();
 
 /**
  * @brief Override the robot's pose (e.g. at the start of autonomous)
