@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Odyssey field coordinate system</title>
+  <desc id="desc">A top-down field with positive y pointing away from the driver station and positive x pointing right. Compass headings increase clockwise: zero degrees up-field, 90 right, 180 toward the drivers, and 270 left.</desc>
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#d9dce8" stroke-width="1"/></pattern>
+    <marker id="axisArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#4051b5"/></marker>
+    <marker id="headingArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#00acc1"/></marker>
+    <style>.axis{stroke-width:5;marker-end:url(#axisArrow)}.heading{fill:none;stroke:#00acc1;stroke-width:4;marker-end:url(#headingArrow)}.title{fill:#252735;font:700 23px Roboto,Arial,sans-serif}.label{fill:#4051b5;font:700 20px 'Roboto Mono',monospace}.muted{fill:#626574;font:16px Roboto,Arial,sans-serif}.degree{fill:#252735;font:700 17px Roboto,Arial,sans-serif}</style>
+  </defs>
+  <rect width="900" height="600" rx="24" fill="#f7f8ff"/>
+  <rect x="180" y="65" width="540" height="470" rx="16" fill="#fff"/><rect x="180" y="65" width="540" height="470" rx="16" fill="url(#grid)" stroke="#9fa8da" stroke-width="3"/>
+  <text x="450" y="35" class="muted" text-anchor="middle">AWAY FROM DRIVER STATION</text>
+  <rect x="328" y="552" width="244" height="28" rx="14" fill="#e8eafc" stroke="#4051b5"/><text x="450" y="572" class="muted" text-anchor="middle">DRIVER STATION</text>
+  <line x1="450" y1="300" x2="450" y2="104" stroke="#4051b5" class="axis"/><line x1="450" y1="300" x2="665" y2="300" stroke="#4051b5" class="axis"/>
+  <text x="470" y="120" class="label">+y</text><text x="620" y="285" class="label">+x</text>
+  <circle cx="450" cy="300" r="72" fill="#e8eafc" stroke="#00acc1" stroke-width="3"/><path d="M450 347 418 278 450 259 482 278Z" fill="#4051b5" stroke="#fff" stroke-width="3"/><circle cx="450" cy="300" r="7" fill="#fff"/>
+  <path class="heading" d="M395 254A72 72 0 0 1 501 254"/><text x="450" y="85" class="degree" text-anchor="middle">0°</text><text x="690" y="307" class="degree">90°</text><text x="450" y="520" class="degree" text-anchor="middle">180°</text><text x="210" y="307" class="degree">270°</text>
+  <text x="450" y="398" class="muted" text-anchor="middle">clockwise is positive</text><text x="200" y="105" class="title">Pose = (x, y, heading)</text>
+</svg>

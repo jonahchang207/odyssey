@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block announce %}
+  {% if config.extra.dev_preview %}
+    <div class="odyssey-dev-banner">
+      <strong>Developer preview</strong>
+      <span>Unreleased documentation built from <code>dev</code>. Content and links may change.</span>
+      <a href="{{ config.repo_url }}/tree/dev">View dev branch</a>
+      <a href="https://jonahchang207.github.io/odyssey/">Stable docs</a>
+    </div>
+  {% endif %}
+{% endblock %}
