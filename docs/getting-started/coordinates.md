@@ -3,6 +3,10 @@
 Odyssey uses the same field conventions as LemLib, so diagrams and paths made
 for LemLib transfer directly.
 
+!!! abstract "The rule to remember"
+    Position is measured in inches. `+y` is away from the driver station,
+    `+x` is right, and compass headings increase clockwise.
+
 ## Position
 
 - Units are **inches**.
@@ -21,18 +25,7 @@ Headings are **compass bearings** in degrees:
 - `270°` = facing `-x` (left)
 - Clockwise is positive, like a compass.
 
-```text
-                 0°
-                 +y
-                 ▲
-                 │
-   270° ◄────────┼────────► 90°
-   -x            │            +x
-                 │
-                 ▼
-                -y
-                180°
-```
+![Odyssey field coordinates with positive x, positive y, driver station, and compass headings](../assets/coordinate-system.svg){ .odyssey-diagram }
 
 `getPose().theta` is continuous — after two full clockwise rotations it reads
 `720`, not `0`. Turn targets are wrapped automatically, so
@@ -59,3 +52,16 @@ wheels), not the edge of the chassis.
     `getPose(true)` / `setPose(pose, true)` angles are **standard math
     radians**: 0 = +x, counterclockwise positive. The library uses this
     frame internally — see [The Odometry Math](../explanation/odometry-math.md).
+
+!!! tip "Quick heading check"
+    Put the robot at `(0, 0, 0)`. A target at `(0, 24)` is straight ahead; a
+    target at `(24, 0)` is to its right. If that mental model matches your
+    field setup, your origin and heading convention agree with Odyssey.
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Origin chosen?</strong><br>Use that pose in a short, timeout-protected autonomous routine.</p>
+
+[Continue to your first autonomous →](first-autonomous.md)
+
+</div>

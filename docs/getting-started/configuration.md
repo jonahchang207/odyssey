@@ -4,6 +4,11 @@ All configuration happens at the top of `src/main.cpp` as global objects.
 This page walks through each piece. The full example lives in
 [`src/main.cpp`](https://github.com/jonahchang207/odyssey/blob/main/src/main.cpp).
 
+!!! abstract "Before you begin"
+    Complete [Installation](installation.md) and record the measurements from
+    [Hardware Setup](hardware.md). Keep the robot on blocks while checking
+    motor and encoder directions.
+
 ## 1. Motors and sensors
 
 ```cpp
@@ -146,3 +151,24 @@ void initialize() {
 !!! warning
     Do **not** move the robot while `calibrate()` is running — the IMU is
     measuring its gyro bias. Place the robot on the field, then turn it on.
+
+## Configuration sanity check
+
+Before writing an autonomous routine, verify these three behaviors:
+
+1. Positive motor output drives both sides forward.
+2. Pushing the robot forward increases each vertical tracking wheel; pushing
+   right increases each horizontal wheel.
+3. After calibration, turning the robot clockwise increases
+   `chassis.getPose().theta`.
+
+If a sensor counts backward, reverse its port. Do not change an offset sign to
+compensate for a reversed encoder.
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Chassis calibrated?</strong><br>Learn the field frame before choosing your starting pose and targets.</p>
+
+[Continue to the coordinate system →](coordinates.md)
+
+</div>

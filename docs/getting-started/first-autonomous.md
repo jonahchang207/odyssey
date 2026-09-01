@@ -3,6 +3,12 @@
 With the chassis configured and calibrated, autonomous routines are short and
 readable.
 
+!!! abstract "Before you run this"
+    Finish [Configuration](configuration.md), understand the
+    [coordinate system](coordinates.md), put the robot on an open field, and
+    keep a controller ready to disable it. The starting PID values still need
+    tuning for precise motion.
+
 ## The basics
 
 ```cpp
@@ -107,3 +113,12 @@ chassis.cancelAllMotions(); // stop everything
 
 - [Tune your PIDs](../tutorials/tuning.md) — required before motions are accurate
 - [Pure pursuit paths](../tutorials/pure-pursuit.md) — smooth multi-point routes
+- [Chassis API](../api/chassis.md) — exact signatures, defaults, and all motion parameters
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Robot moving?</strong><br>Tune turns first, then driving, before judging path accuracy.</p>
+
+[Continue to PID tuning →](../tutorials/tuning.md)
+
+</div>

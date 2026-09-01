@@ -5,6 +5,9 @@ the arc-based method described in 5225A's *Introduction to Position
 Tracking*, adapted to Odyssey's conventions. You don't need this to use the
 library — it's here so you can verify, debug, and extend it.
 
+For the user-facing picture first, see
+[The Coordinate System](../getting-started/coordinates.md).
+
 ## Conventions
 
 Internally (everything on this page):
@@ -103,3 +106,11 @@ That's the whole algorithm — about 60 lines of real code.
   wheel diameter or mounting alignment is wrong. This separation is what
   makes the [calibration procedure](../tutorials/tuning.md#verifying-odometry-accuracy)
   work.
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Applying the math on a real robot?</strong><br>The tuning guide turns each error pattern into a measurement to check.</p>
+
+[Verify odometry accuracy →](../tutorials/tuning.md#verifying-odometry-accuracy)
+
+</div>

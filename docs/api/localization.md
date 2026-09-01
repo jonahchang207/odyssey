@@ -3,6 +3,11 @@
 Include `odyssey/api.hpp`. MCL is optional and has no effect until configured
 and started.
 
+!!! warning "Validate in shadow mode first"
+    `SHADOW` leaves every chassis motion on raw odometry while exposing the MCL
+    estimate and telemetry for comparison. Move to `CORRECTION` only after the
+    physical validation sequence consistently improves known-pose results.
+
 ## Lifecycle and pose selection
 
 ```cpp
@@ -46,3 +51,5 @@ movable game objects to the map.
 See [Monte Carlo localization](../explanation/monte-carlo-localization.md) for
 the complete configuration example, defaults, conventions, tuning, telemetry,
 and validation procedure.
+
+![How optional localization joins Odyssey's raw odometry and selected driving pose](../assets/system-overview.svg){ .odyssey-diagram }

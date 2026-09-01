@@ -3,6 +3,11 @@
 The repository uses a two-branch model, and ships with a menu-driven CLI so
 nobody on the team needs to memorize git commands.
 
+!!! note "This page is for Odyssey contributors"
+    Teams installing Odyssey as a template do not need this branch workflow.
+    Start with [Installation](../getting-started/installation.md) if you only
+    want to use the library in a robot project.
+
 ## The branch model
 
 ```text
@@ -97,3 +102,11 @@ One-time bootstrap for a new clone of this template:
 | try something risky | `.\odyssey branch` |
 | ship tested code to stable | `.\odyssey pr`, then `merge` |
 | freeze code for a competition | `.\odyssey release` |
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Changing a public API?</strong><br>Update its Doxygen comment and the matching docs page in the same pull request.</p>
+
+[Browse the API reference →](../api/chassis.md)
+
+</div>

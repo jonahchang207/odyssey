@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 470" role="img" aria-labelledby="title desc">
+  <title id="title">Odyssey system overview</title>
+  <desc id="desc">Tracking wheels and an IMU feed odometry, which produces a pose for motion controllers. Optional distance sensors also feed Monte Carlo localization, which can safely correct the selected pose after confidence gates.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#2d2116"/><stop offset="1" stop-color="#1d1711"/></linearGradient>
+    <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#e0b54e"/><stop offset="1" stop-color="#b87333"/></linearGradient>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 9 4.5 0 9Z" fill="#c9972c"/></marker>
+    <style>
+      .box{fill:url(#panel);stroke:#8a6420;stroke-width:2}.optional{stroke-dasharray:8 7}.label{fill:#f1e3c5;font:700 21px 'Segoe UI',sans-serif}.small{fill:#bfae92;font:15px 'Segoe UI',sans-serif}.tag{fill:#e0b54e;font:700 13px 'Cascadia Code',monospace;letter-spacing:1px}.line{fill:none;stroke:#c9972c;stroke-width:3;marker-end:url(#arrow)}.gate{fill:#15110d;stroke:url(#gold);stroke-width:2}
+    </style>
+  </defs>
+  <rect width="1120" height="470" rx="24" fill="#15110d"/>
+  <text x="48" y="52" class="tag">SENSE</text><text x="363" y="52" class="tag">ESTIMATE</text><text x="738" y="52" class="tag">ACT</text>
+  <rect class="box" x="44" y="82" width="245" height="105" rx="15"/>
+  <text class="label" x="72" y="124">Tracking wheels</text><text class="small" x="72" y="153">forward + sideways travel</text>
+  <rect class="box" x="44" y="213" width="245" height="105" rx="15"/>
+  <text class="label" x="72" y="255">Inertial sensor</text><text class="small" x="72" y="284">heading change</text>
+  <rect class="box optional" x="44" y="344" width="245" height="82" rx="15"/>
+  <text class="label" x="72" y="379">Distance sensors</text><text class="small" x="72" y="405">optional field ranges</text>
+  <path class="line" d="M289 134H360"/><path class="line" d="M289 265H360"/>
+  <rect class="box" x="362" y="112" width="254" height="155" rx="18"/>
+  <text class="label" x="390" y="160">Raw odometry</text><text class="small" x="390" y="191">arc-based 10 ms tracking</text><text class="small" x="390" y="220">x · y · heading</text>
+  <path class="line" d="M289 385H364"/>
+  <rect class="box optional" x="365" y="313" width="251" height="113" rx="18"/>
+  <text class="label" x="393" y="354">MCL estimate</text><text class="small" x="393" y="383">optional particle filter</text><text class="small" x="393" y="406">shadow mode is non-driving</text>
+  <path class="line" d="M616 190H704"/><path class="line" d="M616 366C655 366 661 300 704 300"/>
+  <polygon class="gate" points="706,245 761,190 816,245 761,300"/>
+  <text class="tag" x="731" y="240">SAFE</text><text class="tag" x="725" y="258">GATES</text>
+  <path class="line" d="M816 245H868"/>
+  <rect class="box" x="870" y="174" width="206" height="142" rx="18"/>
+  <text class="label" x="897" y="218">Selected pose</text><text class="small" x="897" y="249">raw by default</text><text class="small" x="897" y="278">gated correction</text>
+  <path class="line" d="M973 316V369"/>
+  <rect class="box" x="823" y="370" width="253" height="70" rx="15"/>
+  <text class="label" x="851" y="412">Motion controllers</text>
+</svg>

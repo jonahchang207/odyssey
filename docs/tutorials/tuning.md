@@ -3,6 +3,11 @@
 The default gains in the example get the robot moving, but every drivetrain
 is different. Plan on 20-30 minutes with the robot on a field.
 
+Use this guide after the robot can calibrate, report a believable pose, and run
+the short motions from [Your First Autonomous](../getting-started/first-autonomous.md).
+Tune on the same surface and with roughly the same robot weight you expect in a
+match.
+
 ## How PID works (30-second version)
 
 Each tick, the controller computes an output from the error
@@ -99,3 +104,11 @@ Tweak until 10 spins move the pose less than an inch.
     under-reports by ~0.3%. Small IMU error is normal; tracking-wheel
     heading (two parallel wheels, no IMU) can actually beat a poorly-scaled
     IMU if your build quality is good.
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Motion stable and repeatable?</strong><br>Build smooth multi-point routes or look up every motion parameter.</p>
+
+[Create a pure pursuit path →](pure-pursuit.md)
+
+</div>

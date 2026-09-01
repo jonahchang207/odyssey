@@ -2,6 +2,10 @@
 
 `#include "odyssey/api.hpp"` — everything lives in the `odyssey` namespace.
 
+Use this page when you need an exact signature or default. For a guided route,
+start with [Configuration](../getting-started/configuration.md) and
+[Your First Autonomous](../getting-started/first-autonomous.md).
+
 ## Construction
 
 ```cpp
@@ -155,3 +159,10 @@ Inputs are joystick values (-127 to 127). Positive `turn` turns right.
 `curvature` makes the turn input bend the path instead of setting a turn
 rate, which feels consistent at any speed; at zero throttle it pivots in
 place.
+
+## Related guides
+
+- [Tune the PID controllers](../tutorials/tuning.md)
+- [Create and follow a pure pursuit path](../tutorials/pure-pursuit.md)
+- [Shape driver-control input](../tutorials/driver-control.md)
+- [Understand pose tracking](../explanation/odometry-math.md)

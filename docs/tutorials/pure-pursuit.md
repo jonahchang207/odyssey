@@ -5,6 +5,11 @@ Pure pursuit follows a pre-drawn path by continuously steering toward a
 path. The result is smooth, fast, multi-point motion that a chain of
 `moveToPoint` calls can't match.
 
+!!! abstract "Use pure pursuit when"
+    The route has several flowing waypoints and exact final heading is not the
+    primary goal. For one precise destination, prefer `moveToPoint` or
+    `moveToPose`; see [Your First Autonomous](../getting-started/first-autonomous.md).
+
 ## Drawing a path
 
 Use [path.jerryio](https://path.jerryio.com/):
@@ -82,3 +87,11 @@ chassis.waitUntil(30); // 30 inches into the path
 intake.move(127);
 chassis.waitUntilDone();
 ```
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Path behaving differently than expected?</strong><br>Check lookahead and waypoint spacing here, then verify odometry before retuning PID.</p>
+
+[Review the tuning checklist →](tuning.md#verifying-odometry-accuracy)
+
+</div>

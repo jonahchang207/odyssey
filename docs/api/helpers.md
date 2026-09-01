@@ -1,5 +1,9 @@
 # Helpers
 
+These small public types support chassis configuration and custom robot code.
+For motion methods, see the [Chassis API](chassis.md); for a practical PID
+tuning process, see [Tuning the PIDs](../tutorials/tuning.md).
+
 The supporting classes — useful on their own for lifts, flywheels, and
 custom motions.
 

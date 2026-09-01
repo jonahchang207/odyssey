@@ -3,6 +3,10 @@
 Odyssey provides three drive schemes plus input shaping. All of them go in
 `opcontrol()`:
 
+The helpers command the same motor groups used by autonomous motion. Call one
+drive method repeatedly; see the [Chassis API](../api/chassis.md#driver-control)
+for exact signatures.
+
 ```cpp
 void opcontrol() {
     while (true) {
@@ -84,3 +88,16 @@ chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);  // actively holds position
 
 A common pattern is `HOLD` while climbing or defending and `COAST` otherwise,
 toggled on a controller button.
+
+!!! tip "Tune for the driver, not the graph"
+    Raise deadband only enough to stop joystick drift, then adjust `minOutput`
+    until the robot moves cleanly at low command. Change the curve last, with
+    the primary driver testing it on a realistic route.
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Need exact constructor fields or helper behavior?</strong><br>The reference pages list drive curves, brake modes, and utility functions.</p>
+
+[Open the helper API →](../api/helpers.md#drive-curves)
+
+</div>

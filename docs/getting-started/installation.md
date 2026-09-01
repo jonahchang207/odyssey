@@ -5,6 +5,11 @@ package containing the compiled library and its headers that the PROS
 conductor manages for you. You can also vendor the raw source if you want to
 hack on the library itself.
 
+!!! abstract "You will finish this page with"
+    Odyssey applied to an existing PROS project, ready for you to copy and
+    adapt the example chassis configuration. No local ARM toolchain is needed
+    when you use the released template.
+
 ## Prerequisites
 
 - [PROS](https://pros.cs.purdue.edu/v5/getting-started/index.html) installed
@@ -23,6 +28,15 @@ pros c add-depot odyssey https://raw.githubusercontent.com/jonahchang207/odyssey
 # inside your PROS project:
 pros c apply odyssey
 ```
+
+The first command registers Odyssey's release feed on your computer. Run it
+once. The second applies the latest stable template to the PROS project in your
+current directory.
+
+!!! success "Check the install"
+    Open the project's `include/odyssey/` folder and confirm the public headers
+    are present, then add `#include "odyssey/api.hpp"` to `src/main.cpp`.
+    `pros make` should recognize the library when you build the project.
 
 Upgrading later is one command:
 
@@ -76,9 +90,22 @@ pros make
     #include "odyssey/api.hpp"
     ```
 
+!!! warning "Apply the template inside a PROS project"
+    If the conductor cannot find a project, confirm your terminal is open in
+    the directory containing `project.pros`, then run `pros c apply odyssey`
+    again.
+
 ## How the template is built
 
 Every GitHub release automatically builds `odyssey@X.Y.Z.zip` (headers +
 compiled `firmware/odyssey.a`) with the `Build PROS template` workflow and
 updates the depot, so the depot always points at the newest stable release.
 You never need a local ARM toolchain unless you're developing Odyssey itself.
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Installed?</strong><br>Choose your sensor layout and take the measurements the configuration needs.</p>
+
+[Continue to hardware setup →](hardware.md)
+
+</div>

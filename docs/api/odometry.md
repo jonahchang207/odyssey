@@ -5,6 +5,9 @@ The tracking layer. Most teams only touch this through
 for advanced use (custom motions, telemetry, position resets from wall
 alignment, etc).
 
+Read [Hardware Setup](../getting-started/hardware.md) before choosing tracking
+wheels or offset signs.
+
 ## `OdomSensors`
 
 ```cpp
@@ -84,3 +87,9 @@ with the tracking task).
     ```
 
 For the algorithm itself, see [The Odometry Math](../explanation/odometry-math.md).
+
+## Related guides
+
+- [Visual field coordinates](../getting-started/coordinates.md)
+- [Measure and mount tracking wheels](../getting-started/hardware.md)
+- [Diagnose odometry accuracy](../tutorials/tuning.md#verifying-odometry-accuracy)

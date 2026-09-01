@@ -3,6 +3,11 @@
 Odometry is only as good as the sensors feeding it. This page covers what to
 build and how to measure it.
 
+!!! abstract "Before you begin"
+    You need a built drivetrain and a tape measure or calipers. Write down the
+    wheel diameter, tracking-wheel offsets, track width, and drive RPM as you
+    go; the [configuration page](configuration.md) uses all four.
+
 ## Recommended setups
 
 In order of accuracy:
@@ -43,6 +48,13 @@ In order of accuracy:
   your robot gets bumped, arcs fast, or has worn omnis. If you skip it, the
   odometry assumes the robot never slides sideways.
 
+![Top-down robot showing tracking wheel orientation, measurement direction, and offset signs](../assets/tracking-wheel-layout.svg){ .odyssey-diagram }
+
+!!! warning "Offset signs describe position, not encoder direction"
+    A wheel mounted left of center has a negative vertical offset even if its
+    sensor port must also be reversed. Offset sign and encoder direction solve
+    different problems.
+
 ## Measurements you will need
 
 Measure these carefully — they go straight into your configuration:
@@ -70,3 +82,11 @@ counts down, reverse it in the sensor constructor:
 ```cpp
 pros::Rotation verticalEncoder(-11); // negative port = reversed
 ```
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Measurements recorded?</strong><br>Turn the motors, sensors, dimensions, and controller defaults into a chassis.</p>
+
+[Continue to configuration →](configuration.md)
+
+</div>

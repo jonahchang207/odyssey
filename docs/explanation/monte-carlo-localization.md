@@ -6,6 +6,13 @@ odometry supplies each MCL prediction, remains available through
 `getOdometryPose()`, and is the driving pose whenever MCL is disabled, stale, or
 not permitted to correct.
 
+This is an advanced layer. First establish repeatable raw odometry and tuned
+motions with [Hardware Setup](../getting-started/hardware.md),
+[Configuration](../getting-started/configuration.md), and
+[Tuning](../tutorials/tuning.md).
+
+![Odyssey system flow showing optional MCL beside raw odometry](../assets/system-overview.svg){ .odyssey-diagram }
+
 ## Research conclusions
 
 The implementation was derived from the algorithms and APIs below, not copied
@@ -229,3 +236,11 @@ Known limitations: the initial map contains static segments only; movable game
 objects are treated as outliers. The filter uses a known-start Gaussian rather
 than global localization, performs no aggressive kidnapped-robot recovery, and
 cannot validate robot-specific geometry or noise values without hardware logs.
+
+<div class="odyssey-next" markdown>
+
+<p><strong>Implementing this layer?</strong><br>Use the API reference for lifecycle calls and type-level behavior, then validate in shadow mode.</p>
+
+[Open the Localization API →](../api/localization.md)
+
+</div>
