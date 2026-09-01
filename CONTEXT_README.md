@@ -27,8 +27,8 @@ running, then tune and understand the system.
 | `docs/tutorials/` | PID tuning, driver control, pure pursuit, team workflow/CLI |
 | `docs/explanation/` | Odometry math and MCL architecture/validation |
 | `docs/api/` | Chassis, odometry, localization, helper API reference |
-| `docs/assets/logo.svg` | Material-style route and waypoint mark |
-| `docs/assets/banner.svg` | Indigo/cyan Odyssey wordmark |
+| `docs/assets/odyssey-mark.svg` | Material-style route and waypoint mark |
+| `docs/assets/odyssey-wordmark.svg` | Indigo/cyan Odyssey wordmark |
 | `mkdocs.yml` | MkDocs Material theme, palette, extensions, navigation |
 | `.github/workflows/docs.yml` | Publishes stable and developer-preview docs from `main` and `dev` |
 | `include/odyssey/` | Public C++ headers; source of API truth |

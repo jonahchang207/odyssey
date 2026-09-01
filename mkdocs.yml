@@ -6,8 +6,8 @@ repo_name: odyssey
 
 theme:
   name: material
-  logo: assets/logo.svg
-  favicon: assets/logo.svg
+  logo: assets/odyssey-mark.svg
+  favicon: assets/odyssey-mark.svg
   font:
     text: Roboto
     code: Roboto Mono
@@ -63,7 +63,7 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra_css:
-  - stylesheets/extra.css
+  - stylesheets/material-2026.css
 
 extra_javascript:
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js

@@ -25,7 +25,7 @@ Headings are **compass bearings** in degrees:
 - `270°` = facing `-x` (left)
 - Clockwise is positive, like a compass.
 
-![Odyssey field coordinates with positive x, positive y, driver station, and compass headings](../assets/coordinate-system.svg){ .odyssey-diagram }
+![Odyssey field coordinates with positive x, positive y, driver station, and compass headings](../assets/coordinate-system-material.svg){ .odyssey-diagram }
 
 `getPose().theta` is continuous — after two full clockwise rotations it reads
 `720`, not `0`. Turn targets are wrapped automatically, so

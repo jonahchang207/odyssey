@@ -48,7 +48,7 @@ In order of accuracy:
   your robot gets bumped, arcs fast, or has worn omnis. If you skip it, the
   odometry assumes the robot never slides sideways.
 
-![Top-down robot showing tracking wheel orientation, measurement direction, and offset signs](../assets/tracking-wheel-layout.svg){ .odyssey-diagram }
+![Top-down robot showing tracking wheel orientation, measurement direction, and offset signs](../assets/tracking-wheel-layout-material.svg){ .odyssey-diagram }
 
 !!! warning "Offset signs describe position, not encoder direction"
     A wheel mounted left of center has a negative vertical offset even if its

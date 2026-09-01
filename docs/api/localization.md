@@ -52,4 +52,4 @@ See [Monte Carlo localization](../explanation/monte-carlo-localization.md) for
 the complete configuration example, defaults, conventions, tuning, telemetry,
 and validation procedure.
 
-![How optional localization joins Odyssey's raw odometry and selected driving pose](../assets/system-overview.svg){ .odyssey-diagram }
+![How optional localization joins Odyssey's raw odometry and selected driving pose](../assets/system-overview-material.svg){ .odyssey-diagram }

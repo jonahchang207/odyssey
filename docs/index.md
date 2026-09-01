@@ -21,7 +21,7 @@ need to debug it.
 </div>
 
 <div class="odyssey-hero__mark">
-  <img src="assets/logo.svg" alt="Odyssey route connecting robot waypoints">
+  <img src="assets/odyssey-mark.svg" alt="Odyssey route connecting robot waypoints">
   <strong>Locate · Plan · Move</strong>
 </div>
 
@@ -85,7 +85,7 @@ Tracking wheels and an IMU produce raw odometry. Motion controllers consume the
 selected pose, while the optional MCL layer can run in shadow mode or provide a
 carefully gated correction. Raw odometry remains the default and the fallback.
 
-![Odyssey data flow from sensors through odometry and optional localization to motion controllers](assets/system-overview.svg){ .odyssey-diagram }
+![Odyssey data flow from sensors through odometry and optional localization to motion controllers](assets/system-overview-material.svg){ .odyssey-diagram }
 
 [Learn the coordinate system](getting-started/coordinates.md){ .md-button }
 [See how odometry works](explanation/odometry-math.md){ .md-button }

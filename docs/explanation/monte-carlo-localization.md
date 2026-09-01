@@ -11,7 +11,7 @@ motions with [Hardware Setup](../getting-started/hardware.md),
 [Configuration](../getting-started/configuration.md), and
 [Tuning](../tutorials/tuning.md).
 
-![Odyssey system flow showing optional MCL beside raw odometry](../assets/system-overview.svg){ .odyssey-diagram }
+![Odyssey system flow showing optional MCL beside raw odometry](../assets/system-overview-material.svg){ .odyssey-diagram }
 
 ## Research conclusions
 
