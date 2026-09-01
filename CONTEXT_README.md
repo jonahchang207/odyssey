@@ -27,8 +27,8 @@ running, then tune and understand the system.
 | `docs/tutorials/` | PID tuning, driver control, pure pursuit, team workflow/CLI |
 | `docs/explanation/` | Odometry math and MCL architecture/validation |
 | `docs/api/` | Chassis, odometry, localization, helper API reference |
-| `docs/assets/logo.svg` | 512px steampunk airship emblem |
-| `docs/assets/banner.svg` | 1060x300 branded wordmark/banner |
+| `docs/assets/logo.svg` | Material-style route and waypoint mark |
+| `docs/assets/banner.svg` | Indigo/cyan Odyssey wordmark |
 | `mkdocs.yml` | MkDocs Material theme, palette, extensions, navigation |
 | `.github/workflows/docs.yml` | Publishes stable and developer-preview docs from `main` and `dev` |
 | `include/odyssey/` | Public C++ headers; source of API truth |
@@ -59,23 +59,18 @@ path, and credits.
 
 ## Brand and visual direction
 
-The existing assets and `presentation/index.html` establish a distinctive
-steampunk navigation/airship identity:
+The documentation uses a Material-first navigation identity:
 
-- dark brown/charcoal surfaces
-- brass/gold highlights: `#e0b54e`, `#c9972c`, `#8a6420`
-- copper accents: `#b87333`, `#7e4a1d`
-- cream text: roughly `#f1e3c5` / `#e9dcc2`
-- muted tan text: roughly `#b29a72`
-- technical monospace paired with a clean sans-serif
-- motifs: airship, brass instrument panel, charts, field navigation
+- Material indigo (`#4051b5`, `#283593`) communicates motion and control
+- cyan (`#00acc1`, `#80deea`) marks live position, routes, and optional systems
+- neutral white/light-lavender surfaces in light mode and charcoal surfaces in dark mode
+- Roboto and Roboto Mono typography through Material for MkDocs
+- a route-and-waypoint logo, rounded surfaces, restrained elevation, and pill actions
+- diagrams use the same indigo/cyan semantics and high-contrast neutral labels
 
-The current MkDocs palette is Material `deep purple` in both light and dark
-schemes, which does not match the logo/banner or the presentation. A strong
-improvement should make Material feel intentionally Odyssey-specific while
-preserving readable light/dark modes and accessible contrast. Prefer using the
-existing SVG assets and restrained texture/ornament over adding a dependency or
-turning every page into a themed illustration.
+Do not reintroduce the former brass/copper steampunk treatment. Keep additions
+close to Material Design conventions, accessible in both color modes, and
+focused on navigation, robotics, coordinates, and movement.
 
 ## Technical truths the docs must preserve
 
@@ -140,10 +135,9 @@ Prioritize these in roughly this order:
    “when to use it” summary and cross-links from each concept to its tutorial.
    Ensure examples use the exact current signatures and avoid unexplained
    parameters.
-7. **Use the brand consistently.** Replace the default purple emphasis with
-   the established brass/copper palette, style code blocks and links with
-   care, and ensure dark mode remains comfortable rather than becoming a
-   low-contrast brown page.
+7. **Use the brand consistently.** Extend the indigo/cyan Material system,
+   style code blocks and links with care, and preserve comfortable contrast in
+   both light and dark modes.
 8. **Add trust and project-status signals.** Link to GitHub source, releases,
    issues/contributing, and license in prominent but non-distracting places.
    Do not claim benchmarks, compatibility, or production guarantees that are
@@ -189,7 +183,7 @@ Python environment with `mkdocs-material` installed is required.
 > `src/main.cpp`, and public headers. Make the site feel like a polished,
 > approachable VEX robotics toolkit: prioritize homepage conversion,
 > beginner onboarding, coordinate/architecture comprehension, consistent
-> brass/copper visual identity, accessible responsive layout, and precise
+> indigo/cyan Material visual identity, accessible responsive layout, and precise
 > cross-linking. Preserve the technical truths and existing learning content.
 > Implement the changes in the repository, run `python -m mkdocs build
 > --strict --clean` after installing the documented dependency if needed, and

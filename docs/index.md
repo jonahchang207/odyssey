@@ -7,7 +7,7 @@ hide:
 
 <div class="odyssey-hero__copy" markdown>
 
-<span class="odyssey-eyebrow">Odometry + motion control for VEX V5</span>
+<span class="odyssey-eyebrow">:material-navigation-variant: Odometry + motion control for VEX V5</span>
 
 # Know where your robot is. Tell it where to go.
 
@@ -21,8 +21,8 @@ need to debug it.
 </div>
 
 <div class="odyssey-hero__mark">
-  <img src="assets/logo.svg" alt="Odyssey steampunk airship emblem">
-  <strong>Navigate · Control · Repeat</strong>
+  <img src="assets/logo.svg" alt="Odyssey route connecting robot waypoints">
+  <strong>Locate · Plan · Move</strong>
 </div>
 
 </div>
