@@ -4,15 +4,31 @@ on:
   push:
     branches:
       - main
+      - dev
+  workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: documentation-deploy
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out stable documentation
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: stable
+
+      - name: Check out developer preview
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: preview
 
       - uses: actions/setup-python@v5
         with:
@@ -21,5 +37,25 @@ jobs:
       - name: Install MkDocs Material
         run: pip install mkdocs-material
 
-      - name: Build and deploy to GitHub Pages
-        run: mkdocs gh-deploy --force
+      - name: Build stable documentation
+        run: >-
+          python -m mkdocs build
+          --strict
+          --clean
+          --config-file stable/mkdocs.yml
+          --site-dir "$GITHUB_WORKSPACE/site"
+
+      - name: Build developer preview
+        run: >-
+          python -m mkdocs build
+          --strict
+          --clean
+          --config-file preview/mkdocs.dev.yml
+          --site-dir "$GITHUB_WORKSPACE/site/dev"
+
+      - name: Publish both channels to GitHub Pages
+        working-directory: stable
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python -m ghp_import -n -p -f "$GITHUB_WORKSPACE/site"

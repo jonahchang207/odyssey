@@ -30,7 +30,7 @@ running, then tune and understand the system.
 | `docs/assets/logo.svg` | 512px steampunk airship emblem |
 | `docs/assets/banner.svg` | 1060x300 branded wordmark/banner |
 | `mkdocs.yml` | MkDocs Material theme, palette, extensions, navigation |
-| `.github/workflows/docs.yml` | Builds and deploys docs on pushes to `main` |
+| `.github/workflows/docs.yml` | Publishes stable and developer-preview docs from `main` and `dev` |
 | `include/odyssey/` | Public C++ headers; source of API truth |
 | `src/odyssey/` | C++ implementation |
 | `src/main.cpp` | Example robot configuration referenced by docs |
@@ -156,8 +156,10 @@ Prioritize these in roughly this order:
 - Keep internal links relative and preserve the navigation order unless there
   is a clear information-architecture reason to change it.
 - Avoid changing library semantics while doing a docs redesign.
-- Deployment runs on push to `main` via `.github/workflows/docs.yml` and
-  executes `mkdocs gh-deploy --force`.
+- Deployment runs on pushes to `main` or `dev` via
+  `.github/workflows/docs.yml`. It publishes the `main` build at `/odyssey/`
+  and the warning-marked `dev` build at `/odyssey/dev/` in one atomic
+  `gh-pages` update.
 - The repository guidance says work happens on `dev`; `main` is protected and
   changes land through a PR. Follow the existing branch/commit conventions.
 - Do not edit `include/pros/`, `firmware/`, or `common.mk` for this task.

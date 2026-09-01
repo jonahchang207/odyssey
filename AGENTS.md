@@ -13,6 +13,9 @@ These instructions apply to the entire Odyssey repository.
 
 - Do normal work on `dev`. Never commit directly to `main`.
 - Push completed work to `origin/dev` so GitHub Actions can test it.
+- Documentation pushed to `dev` is published as an unreleased preview at
+  `https://jonahchang207.github.io/odyssey/dev/`; verify that URL before
+  promoting documentation to `main`.
 - Use optional `feature/*` branches for larger experiments, then merge them
   into `dev` before stabilization.
 - Treat `main` as the stable, competition-ready branch. Do not force-push or
@@ -37,8 +40,8 @@ These instructions apply to the entire Odyssey repository.
 
 - Merge only after the change has been tested and is ready to be considered
   stable. Documentation changes require a strict MkDocs build and rendered
-  desktop/mobile checks; C++ changes require green GitHub Actions, including
-  the PROS template build.
+  desktop/mobile checks of the developer preview; C++ changes require green
+  GitHub Actions, including the PROS template build.
 - Confirm `dev` is pushed and up to date, the worktree is clean, and all
   required checks pass before opening the pull request.
 - Open a pull request from `dev` into `main`; never bypass the protected branch

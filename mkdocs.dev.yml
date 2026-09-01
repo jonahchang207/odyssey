@@ -1,0 +1,11 @@
+INHERIT: mkdocs.yml
+
+site_name: Odyssey Developer Preview
+site_description: Unreleased Odyssey documentation built from the dev branch
+site_url: https://jonahchang207.github.io/odyssey/dev/
+
+theme:
+  custom_dir: docs/overrides
+
+extra:
+  dev_preview: true

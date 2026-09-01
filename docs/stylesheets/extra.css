@@ -46,6 +46,44 @@ body {
   letter-spacing: 0.005em;
 }
 
+.md-banner {
+  background: #8b2f26;
+  color: #fff8e9;
+}
+
+.odyssey-dev-banner {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.8rem;
+  justify-content: center;
+  padding: 0.15rem 0;
+  text-align: center;
+}
+
+.odyssey-dev-banner strong {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.odyssey-dev-banner code {
+  background: rgba(22, 10, 7, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: inherit;
+}
+
+.odyssey-dev-banner a {
+  color: #ffe099;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.odyssey-dev-banner a:hover,
+.odyssey-dev-banner a:focus-visible {
+  color: #fff;
+}
+
 .md-header {
   background-color: #24180f !important;
   background-image: linear-gradient(100deg, #24180f, #49331f) !important;
@@ -378,6 +416,10 @@ body {
 
   .odyssey-diagram {
     padding: 0.15rem;
+  }
+
+  .odyssey-dev-banner span {
+    flex-basis: 100%;
   }
 }
 
